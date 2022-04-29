@@ -12,8 +12,7 @@
     "jsx": "react",
     "rootDirs": ["src", "tests"],
     "baseUrl": "src",
-    "paths": {
-      "@/*": ["*"],
+    "paths": {    
       "@tests/*": ["../tests/*"],
       "@data/*": ["./data/*"],
       "@domain/*": ["./domain/*"]
