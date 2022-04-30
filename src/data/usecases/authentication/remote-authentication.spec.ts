@@ -15,7 +15,7 @@ type SutTypes = {
   httpPostClientSpy: HttpPostClientSpy<AuthenticationParams, AccountModel>;
 };
 
-const makeSut = (url = faker.internet.url()): SutTypes => {
+function makeSut(url = faker.internet.url()): SutTypes {
   const httpPostClientSpy = new HttpPostClientSpy<
     AuthenticationParams,
     AccountModel
@@ -23,7 +23,7 @@ const makeSut = (url = faker.internet.url()): SutTypes => {
   const sut = new RemoteAuthentication(url, httpPostClientSpy);
 
   return { sut, httpPostClientSpy };
-};
+}
 
 describe('RemoteAuthentication', () => {
   test('Should call HttpPostClient with correct URL', async () => {
