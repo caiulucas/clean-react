@@ -37,6 +37,8 @@
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/strict-boolean-expression": "off",
     "no-useless-constructor": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error",
     "import-helpers/order-imports": [
       "warn",
       {
