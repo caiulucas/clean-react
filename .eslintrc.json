@@ -1,4 +1,9 @@
 {
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "env": {
     "browser": true,
     "es2021": true,
@@ -46,6 +51,6 @@
         "groups": ["module", "/^@domain/", "/^@data/", ["parent", "sibling", "index"]],
         "alphabetize": { "order": "asc", "ignoreCase": true }
       }
-    ]
+    ]    
   }
 }

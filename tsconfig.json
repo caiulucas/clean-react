@@ -2,12 +2,12 @@
   "compilerOptions": {
     "target": "es6",
     "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
     ],
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "jsx": "react",
     "rootDirs": ["src", "tests"],
