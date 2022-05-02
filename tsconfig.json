@@ -9,14 +9,15 @@
     "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "node",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "rootDirs": ["src", "tests"],
     "baseUrl": "src",
     "paths": {    
       "@tests/*": ["../tests/*"],
       "@data/*": ["./data/*"],
       "@domain/*": ["./domain/*"],
-      "@infra/*": ["./infra/*"]
+      "@infra/*": ["./infra/*"],
+      "@presentation/*": ["./presentation/*"],
     },
     "allowJs": true,
     "resolveJsonModule": true

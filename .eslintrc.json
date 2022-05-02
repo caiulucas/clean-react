@@ -4,6 +4,9 @@
       "version": "detect"
     }
   },
+  "globals": {
+    "React": true
+  },
   "env": {
     "browser": true,
     "es2021": true,
@@ -43,12 +46,17 @@
     "@typescript-eslint/strict-boolean-expression": "off",
     "no-useless-constructor": "off",
     "no-unused-vars": "off",
+    "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "import-helpers/order-imports": [
       "warn",
       {
         "newlinesBetween": "always",
-        "groups": ["module", "/^@domain/", "/^@data/", ["parent", "sibling", "index"]],
+        "groups": [
+          "module", 
+          "/^@[a-z]/",
+          ["parent", "sibling", "index"]
+        ],
         "alphabetize": { "order": "asc", "ignoreCase": true }
       }
     ]    
