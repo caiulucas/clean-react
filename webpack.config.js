@@ -4,8 +4,10 @@ const path = require('node:path');
 module.exports = {
   mode: 'development',
   entry: './src/main/index.tsx',
+  devtool: 'eval-source-map',
+  target: 'web',
   output: {
-    path: path.join(__dirname, 'public/js'),
+    path: path.join(__dirname, 'public', 'js'),
     publicPath: '/public/js',
     filename: 'bundle.js',
   },
@@ -16,6 +18,8 @@ module.exports = {
       '@data': path.join(__dirname, 'src', 'data'),
       '@domain': path.join(__dirname, 'src', 'domain'),
       '@infra': path.join(__dirname, 'src', 'infra'),
+      '@main': path.join(__dirname, 'src', 'main'),
+      '@presentation': path.join(__dirname, 'src', 'presentation'),
     },
   },
   module: {
@@ -46,13 +50,14 @@ module.exports = {
     ],
   },
   devServer: {
-    contentBase: './public',
-    writeToDisk: true,
+    devMiddleware: {
+      writeToDisk: true,
+    },
+    compress: true,
+    hot: true,
     historyApiFallback: true,
+    port: 3000,
   },
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-  },
+
   plugins: [new CleanWebpackPlugin()],
 };
