@@ -4,12 +4,12 @@ import { Spinner } from '../Spinner';
 import styles from './styles.scss';
 
 export function FormStatus() {
-  const { isLoading, errorMessage } = useForm();
+  const { isLoading, mainError } = useForm();
 
   return (
     <div data-testid="formStatus" className={styles.formStatus}>
       {isLoading && <Spinner className={styles.spinner} />}
-      {errorMessage && <span>{errorMessage}</span>}
+      {mainError && <span>{mainError}</span>}
     </div>
   );
 }
