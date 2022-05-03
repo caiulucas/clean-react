@@ -1,25 +1,37 @@
 @import './colors.scss';
 
-* {
-  font-family: 'Roboto', sans-serif;
-  
-  font-size: 14px;
-
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  @media (max-width: 1080px) {
+    font-size: 93.75%;
+  }
+  @media (max-width: 720px) {
+    font-size: 87.5%;
+  }
+}
+
+body, input {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.875rem;
+}
+
 body {
   background-color: $background;
+  -webkit-font-smoothing: antialiased;
+  color: $black;
 }
 
 input[type="email"], 
 input[type="password"] {
   border: 1px solid $primaryLight;
-  line-height: 40px;
-  border-radius: 4px;
-  padding: 0 40px 0 8px;
+  line-height: 2.5rem;
+  border-radius: 0.25rem;
+  padding: 0 2.5rem 0 0.5rem;
 
   &:focus {
     outline-color: $primaryLight;
@@ -31,9 +43,9 @@ button {
   color: $white;
   cursor: pointer;
   
-  line-height: 50px;  
-  border-radius: 8px;
-  font-size: 16px;
+  line-height: 3rem;  
+  border-radius: 0.5rem;
+  font-size: 1rem;
   border: none;
 
   transition: 0.2s;
@@ -41,4 +53,9 @@ button {
   &:hover {
     filter: brightness(120%);
   }
+}
+
+[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
