@@ -1,4 +1,5 @@
 import { Footer } from '@presentation/components/Footer';
+import { Input } from '@presentation/components/Input';
 import { LoginHeader } from '@presentation/components/LoginHeader';
 import { Spinner } from '@presentation/components/Spinner';
 
@@ -11,18 +12,8 @@ export function Login() {
 
       <form>
         <h2>Login</h2>
-        <div className={styles.inputWrap}>
-          <input type="email" name="email" placeholder="Digite seu email" />
-          <span>🔴</span>
-        </div>
-        <div className={styles.inputWrap}>
-          <input
-            type="password"
-            name="password"
-            placeholder="Digite sua senha"
-          />
-          <span>🔴</span>
-        </div>
+        <Input type="email" name="email" placeholder="Digite seu email" />
+        <Input type="password" name="password" placeholder="Digite sua senha" />
 
         <button type="submit">Entrar</button>
         <span className={styles.link}>Usuário novo? Crie uma conta</span>

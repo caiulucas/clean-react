@@ -60,24 +60,6 @@ button {
     border-radius: 8px;
     box-shadow: 0 1px 3px -1px $black;    
 
-    .inputWrap {
-      margin-top: 16px;
-      display: flex;
-      position: relative;
-      align-items: center;
-
-      input {
-        flex-grow: 1;
-      }
-
-      span {
-        position: absolute;
-        right: 8px;
-        font-size: 12px;
-        cursor: help;
-      }
-    }
-
     button {
       margin-top: 32px;
     }
@@ -103,5 +85,5 @@ button {
         color: $primaryLight;
       }
     }
-  }
+  } 
 }
