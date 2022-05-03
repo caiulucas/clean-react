@@ -74,16 +74,5 @@ button {
         text-decoration: underline;
       }
     }
-
-    .errorWrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      span {
-        margin-top: 32px;
-        color: $primaryLight;
-      }
-    }
   } 
 }
