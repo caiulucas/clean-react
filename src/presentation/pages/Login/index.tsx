@@ -4,6 +4,7 @@ import {
   Input,
   LoginHeader,
 } from '@presentation/components';
+import { FormProvider } from '@presentation/hooks/useForm';
 
 import styles from './styles.scss';
 
@@ -12,16 +13,22 @@ export function Login() {
     <div className={styles.login}>
       <LoginHeader />
 
-      <form>
-        <h2>Login</h2>
-        <Input type="email" name="email" placeholder="Digite seu email" />
-        <Input type="password" name="password" placeholder="Digite sua senha" />
+      <FormProvider>
+        <form>
+          <h2>Login</h2>
+          <Input type="email" name="email" placeholder="Digite seu email" />
+          <Input
+            type="password"
+            name="password"
+            placeholder="Digite sua senha"
+          />
 
-        <button type="submit">Entrar</button>
-        <span className={styles.link}>Usuário novo? Crie uma conta</span>
+          <button type="submit">Entrar</button>
+          <span className={styles.link}>Usuário novo? Crie uma conta</span>
 
-        <FormStatus />
-      </form>
+          <FormStatus />
+        </form>
+      </FormProvider>
 
       <Footer />
     </div>
