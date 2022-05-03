@@ -1,4 +1,5 @@
-import { Logo } from '@presentation/components/Logo';
+import { Footer } from '@presentation/components/Footer';
+import { LoginHeader } from '@presentation/components/LoginHeader';
 import { Spinner } from '@presentation/components/Spinner';
 
 import styles from './styles.scss';
@@ -6,10 +7,7 @@ import styles from './styles.scss';
 export function Login() {
   return (
     <div className={styles.login}>
-      <header>
-        <Logo />
-        <h1>Caiulucas - Enquete para programadores</h1>
-      </header>
+      <LoginHeader />
 
       <form>
         <h2>Login</h2>
@@ -35,7 +33,7 @@ export function Login() {
         </div>
       </form>
 
-      <footer />
+      <Footer />
     </div>
   );
 }
