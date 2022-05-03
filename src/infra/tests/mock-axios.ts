@@ -1,11 +1,12 @@
-import { faker } from '@faker-js/faker';
 import axios, { AxiosStatic } from 'axios';
+
+import { faker } from '@faker-js/faker';
 
 export function mockAxios() {
   const mockedAxios = axios as jest.Mocked<AxiosStatic>;
 
   mockedAxios.post.mockResolvedValue({
-    data: faker.random.objectElement({ key: faker.company.companyName() }),
+    data: faker.helpers.objectValue({ key: faker.company.companyName() }),
     status: faker.datatype.number(),
   });
 
