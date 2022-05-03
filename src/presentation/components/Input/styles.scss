@@ -1,5 +1,5 @@
 .inputWrap {
-  margin-top: 16px;
+  margin-top: 1rem;
   display: flex;
   position: relative;
   align-items: center;
@@ -10,8 +10,8 @@
 
   span {
     position: absolute;
-    right: 8px;
-    font-size: 12px;
+    right: 0.5rem;
+    font-size: 0.75rem;
     cursor: help;
   }
 }
