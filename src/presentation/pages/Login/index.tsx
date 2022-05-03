@@ -1,5 +1,5 @@
-import { Logo } from '@presentation/components/logo';
-import { Spinner } from '@presentation/components/spinner';
+import { Logo } from '@presentation/components/Logo';
+import { Spinner } from '@presentation/components/Spinner';
 
 import styles from './styles.scss';
 
