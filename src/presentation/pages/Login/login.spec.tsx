@@ -10,7 +10,14 @@ describe('Login Page', () => {
     expect(formStatus.childElementCount).toBe(0);
 
     const submitButton = getByText('Entrar') as HTMLButtonElement;
-
     expect(submitButton.disabled).toBeTruthy();
+
+    const emailStatus = getByTestId('emailStatus');
+    expect(emailStatus.title).toBe('Campo obrigatório');
+    expect(emailStatus.textContent).toBe('🔴');
+
+    const passwordStatus = getByTestId('passwordStatus');
+    expect(passwordStatus.title).toBe('Campo obrigatório');
+    expect(passwordStatus.textContent).toBe('🔴');
   });
 });
