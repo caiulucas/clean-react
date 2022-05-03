@@ -12,12 +12,12 @@
     "jsx": "react-jsx",
     "rootDirs": ["src", "tests"],
     "baseUrl": "src",
-    "paths": {    
+    "paths": {
       "@tests/*": ["../tests/*"],
       "@data/*": ["./data/*"],
       "@domain/*": ["./domain/*"],
       "@infra/*": ["./infra/*"],
-      "@presentation/*": ["./presentation/*"],
+      "@presentation/*": ["./presentation/*"]
     },
     "allowJs": true,
     "resolveJsonModule": true
