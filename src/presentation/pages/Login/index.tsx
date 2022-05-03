@@ -23,7 +23,9 @@ export function Login() {
             placeholder="Digite sua senha"
           />
 
-          <button type="submit">Entrar</button>
+          <button type="submit" disabled>
+            Entrar
+          </button>
           <span className={styles.link}>Usuário novo? Crie uma conta</span>
 
           <FormStatus />
