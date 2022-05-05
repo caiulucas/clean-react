@@ -5,15 +5,20 @@ import {
   LoginHeader,
 } from '@presentation/components';
 import { FormProvider } from '@presentation/hooks/useForm';
+import { Validation } from '@presentation/protocols/validation';
 
 import styles from './styles.scss';
 
-export function Login() {
+type Props = {
+  validation: Validation;
+};
+
+export function Login({ validation }: Props) {
   return (
     <div className={styles.login}>
       <LoginHeader />
 
-      <FormProvider>
+      <FormProvider validation={validation}>
         <form>
           <h2>Login</h2>
           <Input type="email" name="email" placeholder="Digite seu email" />
