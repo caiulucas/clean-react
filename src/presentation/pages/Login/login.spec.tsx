@@ -16,6 +16,7 @@ type SutTypes = {
 
 function makeSut(): SutTypes {
   const validationSpy = new ValidationSpy();
+  validationSpy.errorMessage = faker.random.words();
 
   return {
     sut: render(<Login validation={validationSpy} />),
@@ -29,6 +30,7 @@ describe('Login Page', () => {
   test('Should start with initial state', () => {
     const {
       sut: { getByTestId, getByText },
+      validationSpy,
     } = makeSut();
     const formStatus = getByTestId('formStatus');
 
@@ -38,7 +40,7 @@ describe('Login Page', () => {
     expect(submitButton.disabled).toBeTruthy();
 
     const emailStatus = getByTestId('emailStatus');
-    expect(emailStatus.title).toBe('Campo obrigatório');
+    expect(emailStatus.title).toBe(validationSpy.errorMessage);
     expect(emailStatus.textContent).toBe('🔴');
 
     const passwordStatus = getByTestId('passwordStatus');
@@ -74,5 +76,20 @@ describe('Login Page', () => {
 
     expect(validationSpy.fieldName).toBe('password');
     expect(validationSpy.fieldValue).toBe(password);
+  });
+
+  test('Should show email error if validation fails', () => {
+    const {
+      sut: { getByTestId },
+      validationSpy,
+    } = makeSut();
+
+    const emailInput = getByTestId('email');
+    fireEvent.input(emailInput, { target: { value: faker.internet.email() } });
+
+    const emailStatus = getByTestId('emailStatus');
+
+    expect(emailStatus.title).toBe(validationSpy.errorMessage);
+    expect(emailStatus.textContent).toBe('🔴');
   });
 });
