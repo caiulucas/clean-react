@@ -4,6 +4,7 @@ import {
   Input,
   LoginHeader,
 } from '@presentation/components';
+import { Form } from '@presentation/components/Form';
 import { SubmitButton } from '@presentation/components/SubmitButton';
 import { FormProvider } from '@presentation/hooks/useForm';
 import { Validation } from '@presentation/protocols/validation';
@@ -20,7 +21,7 @@ export function Login({ validation }: Props) {
       <LoginHeader />
 
       <FormProvider validation={validation}>
-        <form>
+        <Form>
           <h2>Login</h2>
           <Input type="email" name="email" placeholder="Digite seu email" />
           <Input
@@ -33,7 +34,7 @@ export function Login({ validation }: Props) {
           <span className={styles.link}>Usuário novo? Crie uma conta</span>
 
           <FormStatus />
-        </form>
+        </Form>
       </FormProvider>
 
       <Footer />

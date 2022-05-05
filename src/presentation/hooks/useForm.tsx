@@ -26,12 +26,13 @@ type StateProps = {
   };
   fields: Fields;
   changeFields(fields: object): void;
+  onSubmit(): void;
 };
 
 const FormContext = createContext<StateProps>(null);
 
 export function FormProvider({ children, validation }: Props) {
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [fields, setFields] = useState({
     email: '',
     password: '',
@@ -60,9 +61,20 @@ export function FormProvider({ children, validation }: Props) {
     setFields(oldState => ({ ...oldState, ...fields }));
   }
 
+  function onSubmit() {
+    setIsLoading(true);
+  }
+
   return (
     <FormContext.Provider
-      value={{ isLoading, mainError, inputErrors, fields, changeFields }}
+      value={{
+        isLoading,
+        mainError,
+        inputErrors,
+        fields,
+        changeFields,
+        onSubmit,
+      }}
     >
       {children}
     </FormContext.Provider>

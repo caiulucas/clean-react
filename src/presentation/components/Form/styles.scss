@@ -1,0 +1,26 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+
+  width: 25rem;
+  background-color: $white;
+  padding: 2.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 0.25rem -1px $black;    
+
+  button {
+    margin-top: 2rem;
+  }
+
+  .link {
+    text-align: center;
+    color: $primary;
+    margin-top: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+} 
