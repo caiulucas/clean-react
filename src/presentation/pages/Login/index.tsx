@@ -4,6 +4,7 @@ import {
   Input,
   LoginHeader,
 } from '@presentation/components';
+import { SubmitButton } from '@presentation/components/SubmitButton';
 import { FormProvider } from '@presentation/hooks/useForm';
 import { Validation } from '@presentation/protocols/validation';
 
@@ -27,10 +28,8 @@ export function Login({ validation }: Props) {
             name="password"
             placeholder="Digite sua senha"
           />
+          <SubmitButton />
 
-          <button type="submit" disabled>
-            Entrar
-          </button>
           <span className={styles.link}>Usuário novo? Crie uma conta</span>
 
           <FormStatus />
