@@ -66,8 +66,20 @@ describe('Login Page', () => {
     const emailInput = getByTestId('email');
     fireEvent.input(emailInput, { target: { value: email } });
 
-    expect(validationSpy.input).toEqual({
-      email,
-    });
+    expect(validationSpy.input).toEqual({ email });
+  });
+
+  test('Should call validation with correct password', () => {
+    const {
+      sut: { getByTestId },
+      validationSpy,
+    } = makeSut();
+
+    const password = faker.internet.password();
+
+    const passwordInput = getByTestId('password');
+    fireEvent.input(passwordInput, { target: { value: password } });
+
+    expect(validationSpy.input).toEqual({ password });
   });
 });
