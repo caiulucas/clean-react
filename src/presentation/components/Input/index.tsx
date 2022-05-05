@@ -19,8 +19,11 @@ export function Input(props: Props) {
   return (
     <div className={styles.inputWrap}>
       <input data-testid={props.name} {...props} onChange={handleChange} />
-      <span data-testid={`${props.name}Status`} title={inputErrors[props.name]}>
-        🔴
+      <span
+        data-testid={`${props.name}Status`}
+        title={inputErrors[props.name] || 'Tudo certo!'}
+      >
+        {inputErrors[props.name] ? '🔴' : '🟢'}
       </span>
     </div>
   );

@@ -50,7 +50,10 @@ export function FormProvider({ children, validation }: Props) {
   }, [fields.email]);
 
   useEffect(() => {
-    validation.validate('password', fields.password);
+    setInputErrors(oldState => ({
+      ...oldState,
+      password: validation.validate('password', fields.password),
+    }));
   }, [fields.password]);
 
   function changeFields(fields: object) {
