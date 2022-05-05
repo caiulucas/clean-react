@@ -8,9 +8,10 @@ type Props = {
 
 export function Form({ children }: Props) {
   const { onSubmit } = useForm();
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    onSubmit();
+    await onSubmit();
   }
 
   return (
