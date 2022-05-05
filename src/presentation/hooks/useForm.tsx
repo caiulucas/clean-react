@@ -37,13 +37,16 @@ export function FormProvider({ children, validation }: Props) {
     password: '',
   });
   const [mainError] = useState('');
-  const [inputErrors] = useState({
+  const [inputErrors, setInputErrors] = useState({
     email: 'Campo obrigatório',
     password: 'Campo obrigatório',
   });
 
   useEffect(() => {
-    validation.validate('email', fields.email);
+    setInputErrors(oldState => ({
+      ...oldState,
+      email: validation.validate('email', fields.email),
+    }));
   }, [fields.email]);
 
   useEffect(() => {
