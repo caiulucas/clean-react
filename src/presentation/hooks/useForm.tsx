@@ -43,11 +43,11 @@ export function FormProvider({ children, validation }: Props) {
   });
 
   useEffect(() => {
-    validation.validate({ email: fields.email });
+    validation.validate('email', fields.email);
   }, [fields.email]);
 
   useEffect(() => {
-    validation.validate({ password: fields.password });
+    validation.validate('password', fields.password);
   }, [fields.password]);
 
   function changeFields(fields: object) {
