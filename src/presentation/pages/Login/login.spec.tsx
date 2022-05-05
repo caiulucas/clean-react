@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Validation } from '@presentation/protocols/validation';
+import { ValidationSpy } from '@presentation/tests';
 import {
   cleanup,
   fireEvent,
@@ -8,18 +8,6 @@ import {
 } from '@testing-library/react';
 
 import { Login } from '.';
-
-class ValidationSpy implements Validation {
-  errorMessage: string;
-  fieldName: string;
-  fieldValue: string;
-
-  validate(fieldName: string, fieldValue: string): string {
-    this.fieldName = fieldName;
-    this.fieldValue = fieldValue;
-    return this.errorMessage;
-  }
-}
 
 type SutTypes = {
   sut: RenderResult;
@@ -34,9 +22,10 @@ function makeSut(): SutTypes {
     validationSpy,
   };
 }
-afterEach(cleanup);
 
 describe('Login Page', () => {
+  afterEach(cleanup);
+
   test('Should start with initial state', () => {
     const {
       sut: { getByTestId, getByText },
