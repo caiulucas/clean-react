@@ -1,10 +1,20 @@
-import { render } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 
 import { Login } from '.';
 
+type SutTypes = {
+  sut: RenderResult;
+};
+
+function makeSut(): SutTypes {
+  return { sut: render(<Login />) };
+}
+
 describe('Login Page', () => {
   test('Should start with initial state', () => {
-    const { getByTestId, getByText } = render(<Login />);
+    const {
+      sut: { getByTestId, getByText },
+    } = makeSut();
     const formStatus = getByTestId('formStatus');
 
     expect(formStatus.childElementCount).toBe(0);
