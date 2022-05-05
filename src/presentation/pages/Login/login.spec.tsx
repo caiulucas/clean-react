@@ -44,7 +44,7 @@ describe('Login Page', () => {
     expect(emailStatus.textContent).toBe('🔴');
 
     const passwordStatus = getByTestId('passwordStatus');
-    expect(passwordStatus.title).toBe('Campo obrigatório');
+    expect(passwordStatus.title).toBe(validationSpy.errorMessage);
     expect(passwordStatus.textContent).toBe('🔴');
   });
 
@@ -91,5 +91,41 @@ describe('Login Page', () => {
 
     expect(emailStatus.title).toBe(validationSpy.errorMessage);
     expect(emailStatus.textContent).toBe('🔴');
+  });
+
+  test('Should show password error if validation fails', () => {
+    const {
+      sut: { getByTestId },
+      validationSpy,
+    } = makeSut();
+
+    const passwordInput = getByTestId('password');
+    fireEvent.input(passwordInput, {
+      target: { value: faker.internet.password() },
+    });
+
+    const passwordStatus = getByTestId('passwordStatus');
+
+    expect(passwordStatus.title).toBe(validationSpy.errorMessage);
+    expect(passwordStatus.textContent).toBe('🔴');
+  });
+
+  test('Should show valid password state if validation succeeds', () => {
+    const {
+      sut: { getByTestId },
+      validationSpy,
+    } = makeSut();
+
+    validationSpy.errorMessage = null;
+
+    const passwordInput = getByTestId('password');
+    fireEvent.input(passwordInput, {
+      target: { value: faker.internet.password() },
+    });
+
+    const passwordStatus = getByTestId('passwordStatus');
+
+    expect(passwordStatus.title).toBe('Tudo certo!');
+    expect(passwordStatus.textContent).toBe('🟢');
   });
 });
