@@ -34,6 +34,7 @@ export function FormProvider({ children, validation }: Props) {
   const [isLoading] = useState(false);
   const [fields, setFields] = useState({
     email: '',
+    password: '',
   });
   const [mainError] = useState('');
   const [inputErrors] = useState({
@@ -44,6 +45,10 @@ export function FormProvider({ children, validation }: Props) {
   useEffect(() => {
     validation.validate({ email: fields.email });
   }, [fields.email]);
+
+  useEffect(() => {
+    validation.validate({ password: fields.password });
+  }, [fields.password]);
 
   function changeFields(fields: object) {
     setFields(oldState => ({ ...oldState, ...fields }));
