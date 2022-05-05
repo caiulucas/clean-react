@@ -64,7 +64,7 @@ export function FormProvider({ children, validation, authentication }: Props) {
   }
 
   async function onSubmit() {
-    if (isLoading) return;
+    if (isLoading || inputErrors.email || inputErrors.password) return;
     setIsLoading(true);
 
     authentication.auth(fields);
