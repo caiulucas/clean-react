@@ -4,6 +4,7 @@ import {
   ReactNode,
   useContext,
   useEffect,
+  useCallback,
 } from 'react';
 
 import { Authentication } from '@domain/usecases';
@@ -39,7 +40,7 @@ export function FormProvider({ children, validation, authentication }: Props) {
     email: '',
     password: '',
   });
-  const [mainError] = useState('');
+  const [mainError, setMainError] = useState('');
   const [inputErrors, setInputErrors] = useState({
     email: 'Campo obrigatório',
     password: 'Campo obrigatório',
@@ -50,25 +51,36 @@ export function FormProvider({ children, validation, authentication }: Props) {
       ...oldState,
       email: validation.validate('email', fields.email),
     }));
-  }, [fields.email]);
+  }, [fields.email, validation]);
 
   useEffect(() => {
     setInputErrors(oldState => ({
       ...oldState,
       password: validation.validate('password', fields.password),
     }));
-  }, [fields.password]);
+  }, [fields.password, validation]);
 
   function changeFields(fields: object) {
     setFields(oldState => ({ ...oldState, ...fields }));
   }
 
-  async function onSubmit() {
-    if (isLoading || inputErrors.email || inputErrors.password) return;
-    setIsLoading(true);
+  const onSubmit = useCallback(async () => {
+    try {
+      if (isLoading || inputErrors.email || inputErrors.password) return;
+      setIsLoading(true);
 
-    authentication.auth(fields);
-  }
+      await authentication.auth(fields);
+    } catch (error) {
+      setIsLoading(false);
+      setMainError(error.message);
+    }
+  }, [
+    isLoading,
+    inputErrors.email,
+    inputErrors.password,
+    authentication,
+    fields,
+  ]);
 
   return (
     <FormContext.Provider

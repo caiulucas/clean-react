@@ -9,7 +9,7 @@ export function FormStatus() {
   return (
     <div data-testid="formStatus" className={styles.formStatus}>
       {isLoading && <Spinner className={styles.spinner} />}
-      {mainError && <span>{mainError}</span>}
+      {mainError && <span data-testid="mainError">{mainError}</span>}
     </div>
   );
 }
