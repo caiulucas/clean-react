@@ -1,3 +1,5 @@
+import 'jest-localstorage-mock';
+
 import { InvalidCredentialsError } from '@domain/errors';
 import { faker } from '@faker-js/faker';
 import { ValidationSpy, AuthenticationSpy } from '@presentation/tests';
@@ -79,7 +81,10 @@ function simulateStatusForField(
 }
 
 describe('Login Page', () => {
-  afterEach(cleanup);
+  afterEach(() => {
+    cleanup();
+    localStorage.clear();
+  });
 
   test('Should start with initial state', () => {
     const validationError = faker.random.words();
@@ -218,5 +223,17 @@ describe('Login Page', () => {
 
     expect(formStatus.childElementCount).toBe(1);
     expect(mainError.textContent).toBe(error.message);
+  });
+
+  test('Should add accessToken to localStorage on success', async () => {
+    const { sut, authenticationSpy } = makeSut();
+
+    simulateValidSubmit(sut);
+    await waitFor(() => sut.getByTestId('form'));
+
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      '@clean-raect:accessToken',
+      authenticationSpy.account.access_token,
+    );
   });
 });
