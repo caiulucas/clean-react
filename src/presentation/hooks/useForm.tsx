@@ -69,7 +69,9 @@ export function FormProvider({ children, validation, authentication }: Props) {
       if (isLoading || inputErrors.email || inputErrors.password) return;
       setIsLoading(true);
 
-      await authentication.auth(fields);
+      const account = await authentication.auth(fields);
+
+      localStorage.setItem('@clean-raect:accessToken', account.access_token);
     } catch (error) {
       setIsLoading(false);
       setMainError(error.message);
