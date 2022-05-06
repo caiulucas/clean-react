@@ -1,10 +1,13 @@
+import { InvalidCredentialsError } from '@domain/errors';
 import { faker } from '@faker-js/faker';
 import { ValidationSpy, AuthenticationSpy } from '@presentation/tests';
 import {
+  act,
   cleanup,
   fireEvent,
   render,
   RenderResult,
+  waitFor,
 } from '@testing-library/react';
 
 import { Login } from '.';
@@ -81,8 +84,8 @@ describe('Login Page', () => {
   test('Should start with initial state', () => {
     const validationError = faker.random.words();
     const { sut } = makeSut({ validationError });
-    const formStatus = sut.getByTestId('formStatus');
 
+    const formStatus = sut.getByTestId('formStatus');
     expect(formStatus.childElementCount).toBe(0);
 
     const submitButton = sut.getByText('Entrar') as HTMLButtonElement;
@@ -196,5 +199,24 @@ describe('Login Page', () => {
     fireEvent.submit(sut.getByTestId('form'));
 
     expect(authenticationSpy.callsCount).toBe(0);
+  });
+
+  test('Should present error if authentication fails', async () => {
+    const { sut, authenticationSpy } = makeSut();
+    const error = new InvalidCredentialsError();
+
+    const formStatus = sut.getByTestId('formStatus');
+
+    await act(async () => {
+      jest.spyOn(authenticationSpy, 'auth').mockRejectedValueOnce(error);
+      simulateValidSubmit(sut);
+
+      await waitFor(() => formStatus);
+    });
+
+    const mainError = sut.getByTestId('mainError');
+
+    expect(formStatus.childElementCount).toBe(1);
+    expect(mainError.textContent).toBe(error.message);
   });
 });
