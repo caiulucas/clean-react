@@ -27,7 +27,7 @@ type SutParams = {
   validationError: string;
 };
 
-const history = createMemoryHistory();
+const history = createMemoryHistory({ initialEntries: ['/login'] });
 
 function makeSut(params?: SutParams): SutTypes {
   const validationSpy = new ValidationSpy();
@@ -246,6 +246,8 @@ describe('Login Page', () => {
       '@clean-react:accessToken',
       authenticationSpy.account.access_token,
     );
+
+    expect(mockedUsedNavigate).toHaveBeenCalledWith('/', { replace: true });
   });
 
   test('Should go to signup page', () => {
