@@ -71,7 +71,7 @@ export function FormProvider({ children, validation, authentication }: Props) {
 
       const account = await authentication.auth(fields);
 
-      localStorage.setItem('@clean-raect:accessToken', account.access_token);
+      localStorage.setItem('@clean-react:accessToken', account.access_token);
     } catch (error) {
       setIsLoading(false);
       setMainError(error.message);

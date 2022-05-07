@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { Authentication } from '@domain/usecases';
 import {
   Footer,
@@ -33,7 +35,9 @@ export function Login(props: Props) {
           />
           <SubmitButton />
 
-          <span className={styles.link}>Usuário novo? Crie uma conta</span>
+          <Link to="/signup" className={styles.link}>
+            Usuário novo? Crie uma conta
+          </Link>
 
           <FormStatus />
         </Form>
