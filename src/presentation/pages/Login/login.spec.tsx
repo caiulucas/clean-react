@@ -81,7 +81,7 @@ function simulateValidSubmit(
   fireEvent.click(submitButton);
 }
 
-function simulateStatusForField(
+function testStatusForField(
   sut: RenderResult,
   fieldName: string,
   validationError?: string,
@@ -89,6 +89,11 @@ function simulateStatusForField(
   const status = sut.getByTestId(`${fieldName}Status`);
   expect(status.title).toBe(validationError || 'Tudo certo!');
   expect(status.textContent).toBe(validationError ? '🔴' : '🟢');
+}
+
+function testFormStatusChildCount(sut: RenderResult, count: number) {
+  const formStatus = sut.getByTestId('formStatus');
+  expect(formStatus.childElementCount).toBe(count);
 }
 
 describe('Login Page', () => {
@@ -101,14 +106,13 @@ describe('Login Page', () => {
     const validationError = faker.random.words();
     const { sut } = makeSut({ validationError });
 
-    const formStatus = sut.getByTestId('formStatus');
-    expect(formStatus.childElementCount).toBe(0);
+    testFormStatusChildCount(sut, 0);
 
     const submitButton = sut.getByText('Entrar') as HTMLButtonElement;
     expect(submitButton.disabled).toBeTruthy();
 
-    simulateStatusForField(sut, 'email', validationError);
-    simulateStatusForField(sut, 'password', validationError);
+    testStatusForField(sut, 'email', validationError);
+    testStatusForField(sut, 'password', validationError);
   });
 
   test('Should call validation with correct email', () => {
@@ -160,7 +164,7 @@ describe('Login Page', () => {
 
     populateEmailField(sut);
 
-    simulateStatusForField(sut, 'email');
+    testStatusForField(sut, 'email');
   });
 
   test('Should show valid password state if validation succeeds', () => {
@@ -168,7 +172,7 @@ describe('Login Page', () => {
 
     populatePasswordField(sut);
 
-    simulateStatusForField(sut, 'password');
+    testStatusForField(sut, 'password');
   });
 
   test('Should enable submit button if form is valid', () => {
@@ -221,18 +225,14 @@ describe('Login Page', () => {
     const { sut, authenticationSpy } = makeSut();
     const error = new InvalidCredentialsError();
 
-    const formStatus = sut.getByTestId('formStatus');
-
     await act(async () => {
       jest.spyOn(authenticationSpy, 'auth').mockRejectedValueOnce(error);
-      simulateValidSubmit(sut);
-
-      await waitFor(() => formStatus);
+      await waitFor(() => simulateValidSubmit(sut));
     });
 
     const mainError = sut.getByTestId('mainError');
 
-    expect(formStatus.childElementCount).toBe(1);
+    testFormStatusChildCount(sut, 1);
     expect(mainError.textContent).toBe(error.message);
   });
 
