@@ -1,5 +1,8 @@
 import 'jest-localstorage-mock';
 
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router-dom';
+
 import { InvalidCredentialsError } from '@domain/errors';
 import { faker } from '@faker-js/faker';
 import { ValidationSpy, AuthenticationSpy } from '@presentation/tests';
@@ -24,20 +27,28 @@ type SutParams = {
   validationError: string;
 };
 
+const history = createMemoryHistory();
+
 function makeSut(params?: SutParams): SutTypes {
   const validationSpy = new ValidationSpy();
   const authenticationSpy = new AuthenticationSpy();
 
   validationSpy.errorMessage = params?.validationError;
 
-  return {
-    sut: render(
+  const sut = render(
+    <Router location={history.location} navigator={history}>
       <Login validation={validationSpy} authentication={authenticationSpy} />,
-    ),
-    validationSpy,
-    authenticationSpy,
-  };
+    </Router>,
+  );
+
+  return { sut, validationSpy, authenticationSpy };
 }
+
+const mockedUsedNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...(jest.requireActual('react-router-dom') as any),
+  useNavigate: () => mockedUsedNavigate,
+}));
 
 function populateEmailField(sut: RenderResult, email = faker.internet.email()) {
   const emailInput = sut.getByTestId('email');
@@ -232,8 +243,17 @@ describe('Login Page', () => {
     await waitFor(() => sut.getByTestId('form'));
 
     expect(localStorage.setItem).toHaveBeenCalledWith(
-      '@clean-raect:accessToken',
+      '@clean-react:accessToken',
       authenticationSpy.account.access_token,
     );
+  });
+
+  test('Should go to signup page', () => {
+    const { sut } = makeSut();
+
+    const register = sut.getByText('Usuário novo? Crie uma conta');
+    fireEvent.click(register);
+
+    expect(history.location.pathname).toBe('/signup');
   });
 });
