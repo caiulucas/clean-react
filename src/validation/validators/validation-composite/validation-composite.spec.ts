@@ -4,17 +4,19 @@ import { ValidationComposite } from './validation-composite';
 
 describe('ValidationComposite', () => {
   test('Should return error if any validation fails', () => {
-    const successFieldValidationSpy = new FieldValidationSpy('any_field');
-    const failFieldValidationSpy = new FieldValidationSpy('any_field');
-    failFieldValidationSpy.error = new Error('any_error');
+    const firstFieldValidationSpy = new FieldValidationSpy('any_field');
+    firstFieldValidationSpy.error = new Error('first_error');
+
+    const secondFieldValidationSpy = new FieldValidationSpy('any_field');
+    secondFieldValidationSpy.error = new Error('any_error');
 
     const sut = new ValidationComposite([
-      successFieldValidationSpy,
-      failFieldValidationSpy,
+      firstFieldValidationSpy,
+      secondFieldValidationSpy,
     ]);
 
     const error = sut.validate('any_field', 'any_value');
 
-    expect(error).toBe('any_error');
+    expect(error).toBe('first_error');
   });
 });
