@@ -17,7 +17,8 @@
       "@data/*": ["./data/*"],
       "@domain/*": ["./domain/*"],
       "@infra/*": ["./infra/*"],
-      "@presentation/*": ["./presentation/*"]
+      "@presentation/*": ["./presentation/*"],
+      "@validation/*": ["./validation/*"]
     },
     "allowJs": true,
     "resolveJsonModule": true
