@@ -20,6 +20,7 @@ module.exports = {
       '@infra': path.join(__dirname, 'src', 'infra'),
       '@main': path.join(__dirname, 'src', 'main'),
       '@presentation': path.join(__dirname, 'src', 'presentation'),
+      '@validation': path.join(__dirname, 'src', 'validation'),
     },
   },
   module: {
