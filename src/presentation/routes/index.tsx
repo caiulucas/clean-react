@@ -1,14 +1,14 @@
-import '@presentation/styles/global.scss';
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import { Login } from '@presentation/pages';
+type Props = {
+  makeLogin: React.FC;
+};
 
-export function Router() {
+export function Router({ makeLogin: MakeLogin }: Props) {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<MakeLogin />} />
       </Routes>
     </BrowserRouter>
   );
