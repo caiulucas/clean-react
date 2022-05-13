@@ -5,4 +5,16 @@
   flex-direction: column;
   height: 100vh;
   justify-content: space-between;
+
+
+  .link {
+    text-align: center;
+    color: $primary;
+    margin-top: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
