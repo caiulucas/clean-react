@@ -35,7 +35,7 @@ describe('ValidationBuilder', () => {
     const validations = ValidationBuilder.field(fieldName)
       .required()
       .email()
-      .min(5)
+      .min(length)
       .build();
 
     expect(validations).toEqual([
