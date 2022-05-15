@@ -1,3 +1,3 @@
-export function makeApiUrl(): string {
-  return 'https://fordevs.herokuapp.com/api/login';
+export function makeApiUrl(path: string): string {
+  return `https://fordevs.herokuapp.com/api${path}`;
 }
