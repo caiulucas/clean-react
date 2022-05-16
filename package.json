@@ -10,7 +10,8 @@
     "test:ci": "yarn test --coverage",
     "test:coveralls": "yarn test:ci && coveralls < coverage/lcov.info",
     "test:staged": "yarn test --findRelatedTests",
-    "check": "yarn --check-files"
+    "check": "yarn --check-files",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.2.0",
