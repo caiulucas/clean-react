@@ -6,9 +6,9 @@
   "scripts": {
     "start": "webpack-dev-server --open",
     "test": "jest --passWithNoTests --no-cache --runInBand",
-    "test:watch": "yarn test -- --watch",
-    "test:ci": "yarn test -- --coverage",
-    "test:staged": "yarn test -- --findRelatedTests",
+    "test:watch": "yarn test --watch",
+    "test:ci": "yarn test --coverage",
+    "test:staged": "yarn test --findRelatedTests",
     "check": "yarn --check-files"
   },
   "devDependencies": {
