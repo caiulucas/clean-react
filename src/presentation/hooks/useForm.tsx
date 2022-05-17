@@ -7,8 +7,7 @@ import {
   useCallback,
 } from 'react';
 
-import { Authentication } from '@domain/usecases';
-import { SaveAccessToken } from '@domain/usecases/save-access-token';
+import { Authentication, SaveAccessToken } from '@domain/usecases';
 import { Validation } from '@presentation/protocols/validation';
 
 type Props = {
