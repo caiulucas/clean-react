@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import { Authentication } from '@domain/usecases';
+import { SaveAccessToken } from '@domain/usecases/save-access-token';
 import {
   Footer,
   FormStatus,
@@ -17,6 +18,7 @@ import styles from './styles.scss';
 type Props = {
   validation: Validation;
   authentication: Authentication;
+  saveAccessToken: SaveAccessToken;
 };
 
 export function Login(props: Props) {

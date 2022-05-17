@@ -8,11 +8,13 @@ import {
 } from 'react';
 
 import { Authentication } from '@domain/usecases';
+import { SaveAccessToken } from '@domain/usecases/save-access-token';
 import { Validation } from '@presentation/protocols/validation';
 
 type Props = {
   validation: Validation;
   authentication: Authentication;
+  saveAccessToken: SaveAccessToken;
   children: ReactNode;
 };
 
@@ -34,7 +36,12 @@ type StateProps = {
 
 const FormContext = createContext<StateProps>(null);
 
-export function FormProvider({ children, validation, authentication }: Props) {
+export function FormProvider({
+  children,
+  validation,
+  authentication,
+  saveAccessToken,
+}: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, setFields] = useState({
     email: '',
@@ -71,18 +78,12 @@ export function FormProvider({ children, validation, authentication }: Props) {
 
       const account = await authentication.auth(fields);
 
-      localStorage.setItem('@clean-react:accessToken', account.access_token);
+      await saveAccessToken.save(account.access_token);
     } catch (error) {
       setIsLoading(false);
       setMainError(error.message);
     }
-  }, [
-    isLoading,
-    inputErrors.email,
-    inputErrors.password,
-    authentication,
-    fields,
-  ]);
+  }, [isLoading, inputErrors, authentication, fields, saveAccessToken]);
 
   return (
     <FormContext.Provider
