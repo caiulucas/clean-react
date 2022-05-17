@@ -82,6 +82,7 @@ export function FormProvider({
     } catch (error) {
       setIsLoading(false);
       setMainError(error.message);
+      throw error;
     }
   }, [isLoading, inputErrors, authentication, fields, saveAccessToken]);
 

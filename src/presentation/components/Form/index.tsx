@@ -14,8 +14,10 @@ export function Form({ children }: Props) {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    await onSubmit();
-    navigate('/', { replace: true });
+    try {
+      await onSubmit();
+      navigate('/', { replace: true });
+    } catch (e) {}
   }
 
   return (
