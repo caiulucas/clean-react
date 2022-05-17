@@ -104,6 +104,11 @@ function testFormStatusChildCount(sut: RenderResult, count: number) {
   expect(formStatus.childElementCount).toBe(count);
 }
 
+function testElementText(sut: RenderResult, elementId: string, text: string) {
+  const element = sut.getByTestId(elementId);
+  expect(element.textContent).toBe(text);
+}
+
 describe('Login Page', () => {
   afterEach(() => cleanup);
 
@@ -235,10 +240,8 @@ describe('Login Page', () => {
       await waitFor(() => simulateValidSubmit(sut));
     });
 
-    const mainError = sut.getByTestId('mainError');
-
     testFormStatusChildCount(sut, 1);
-    expect(mainError.textContent).toBe(error.message);
+    testElementText(sut, 'mainError', error.message);
   });
 
   test('Should call SaveAccessToken on success', async () => {
@@ -252,6 +255,20 @@ describe('Login Page', () => {
     );
 
     expect(mockedUsedNavigate).toHaveBeenCalledWith('/', { replace: true });
+  });
+
+  test('Should present error if SaveAccessToken fails', async () => {
+    const { sut, saveAccessTokenMock } = makeSut();
+    const error = new InvalidCredentialsError();
+
+    await act(async () => {
+      jest.spyOn(saveAccessTokenMock, 'save').mockRejectedValueOnce(error);
+      simulateValidSubmit(sut);
+      await waitFor(() => sut.getByTestId('form'));
+    });
+
+    testFormStatusChildCount(sut, 1);
+    testElementText(sut, 'mainError', error.message);
   });
 
   test('Should go to signup page', () => {
