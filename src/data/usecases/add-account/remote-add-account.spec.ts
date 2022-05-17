@@ -66,4 +66,16 @@ describe('RemoteAuthentication', () => {
 
     expect(promise).rejects.toThrowError(new UnexpectedError());
   });
+
+  test('Should throw UnexpectedError if HttpPostClient returns 500', () => {
+    const { sut, httpPostClientSpy } = makeSut();
+
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.serverError,
+    };
+
+    const promise = sut.add(mockAddAccountParams());
+
+    expect(promise).rejects.toThrowError(new UnexpectedError());
+  });
 });
