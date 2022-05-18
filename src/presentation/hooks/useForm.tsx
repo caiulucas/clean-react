@@ -10,13 +10,6 @@ import {
 import { Authentication, SaveAccessToken } from '@domain/usecases';
 import { Validation } from '@presentation/protocols/validation';
 
-type Props = {
-  validation: Validation;
-  authentication: Authentication;
-  saveAccessToken: SaveAccessToken;
-  children: ReactNode;
-};
-
 type Fields = {
   email: string;
 };
@@ -33,6 +26,14 @@ type StateProps = {
   onSubmit(): Promise<void>;
 };
 
+type Props = {
+  validation: Validation;
+  authentication: Authentication;
+  saveAccessToken: SaveAccessToken;
+  children: ReactNode;
+  value?: Omit<StateProps, 'fields' | 'changeFields' | 'onSubmit'>;
+};
+
 const FormContext = createContext<StateProps>(null);
 
 export function FormProvider({
@@ -40,6 +41,7 @@ export function FormProvider({
   validation,
   authentication,
   saveAccessToken,
+  value,
 }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, setFields] = useState({
@@ -55,14 +57,14 @@ export function FormProvider({
   useEffect(() => {
     setInputErrors(oldState => ({
       ...oldState,
-      email: validation.validate('email', fields.email),
+      email: validation?.validate('email', fields.email),
     }));
   }, [fields.email, validation]);
 
   useEffect(() => {
     setInputErrors(oldState => ({
       ...oldState,
-      password: validation.validate('password', fields.password),
+      password: validation?.validate('password', fields.password),
     }));
   }, [fields.password, validation]);
 
@@ -87,14 +89,16 @@ export function FormProvider({
 
   return (
     <FormContext.Provider
-      value={{
-        isLoading,
-        mainError,
-        inputErrors,
-        fields,
-        changeFields,
-        onSubmit,
-      }}
+      value={
+        (value as any) || {
+          isLoading,
+          mainError,
+          inputErrors,
+          fields,
+          changeFields,
+          onSubmit,
+        }
+      }
     >
       {children}
     </FormContext.Provider>
