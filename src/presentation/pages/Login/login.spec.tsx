@@ -9,6 +9,7 @@ import {
   AuthenticationSpy,
   SaveAccessTokenMock,
 } from '@presentation/tests';
+import { Helpers } from '@presentation/tests/helpers';
 import {
   act,
   cleanup,
@@ -89,21 +90,6 @@ function simulateValidSubmit(
   fireEvent.click(submitButton);
 }
 
-function testStatusForField(
-  sut: RenderResult,
-  fieldName: string,
-  validationError?: string,
-) {
-  const status = sut.getByTestId(`${fieldName}Status`);
-  expect(status.title).toBe(validationError || 'Tudo certo!');
-  expect(status.textContent).toBe(validationError ? '🔴' : '🟢');
-}
-
-function testFormStatusChildCount(sut: RenderResult, count: number) {
-  const formStatus = sut.getByTestId('formStatus');
-  expect(formStatus.childElementCount).toBe(count);
-}
-
 function testElementText(sut: RenderResult, elementId: string, text: string) {
   const element = sut.getByTestId(elementId);
   expect(element.textContent).toBe(text);
@@ -116,13 +102,13 @@ describe('Login Page', () => {
     const validationError = faker.random.words();
     const { sut } = makeSut({ validationError });
 
-    testFormStatusChildCount(sut, 0);
+    Helpers.testChildCount(sut, 'formStatus', 0);
 
     const submitButton = sut.getByText('Entrar') as HTMLButtonElement;
     expect(submitButton.disabled).toBeTruthy();
 
-    testStatusForField(sut, 'email', validationError);
-    testStatusForField(sut, 'password', validationError);
+    Helpers.testStatusForField(sut, 'email', validationError);
+    Helpers.testStatusForField(sut, 'password', validationError);
   });
 
   test('Should call validation with correct email', () => {
@@ -174,7 +160,7 @@ describe('Login Page', () => {
 
     populateEmailField(sut);
 
-    testStatusForField(sut, 'email');
+    Helpers.testStatusForField(sut, 'email');
   });
 
   test('Should show valid password state if validation succeeds', () => {
@@ -182,7 +168,7 @@ describe('Login Page', () => {
 
     populatePasswordField(sut);
 
-    testStatusForField(sut, 'password');
+    Helpers.testStatusForField(sut, 'password');
   });
 
   test('Should enable submit button if form is valid', () => {
@@ -240,7 +226,7 @@ describe('Login Page', () => {
       await waitFor(() => simulateValidSubmit(sut));
     });
 
-    testFormStatusChildCount(sut, 1);
+    Helpers.testChildCount(sut, 'formStatus', 1);
     testElementText(sut, 'mainError', error.message);
   });
 
@@ -267,7 +253,7 @@ describe('Login Page', () => {
       await waitFor(() => sut.getByTestId('form'));
     });
 
-    testFormStatusChildCount(sut, 1);
+    Helpers.testChildCount(sut, 'formStatus', 1);
     testElementText(sut, 'mainError', error.message);
   });
 

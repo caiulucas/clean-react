@@ -2,6 +2,7 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
 import { faker } from '@faker-js/faker';
+import { Helpers } from '@presentation/tests/helpers';
 import { render, RenderResult } from '@testing-library/react';
 
 import { SignUp } from '.';
@@ -21,35 +22,20 @@ function makeSut(): SutTypes {
   };
 }
 
-function testStatusForField(
-  sut: RenderResult,
-  elementId: string,
-  validationError?: string,
-) {
-  const status = sut.getByTestId(`${elementId}Status`);
-  expect(status.title).toBe(validationError || 'Tudo certo!');
-  expect(status.textContent).toBe(validationError ? '🔴' : '🟢');
-}
-
-function testChildCount(sut: RenderResult, elementId: string, count: number) {
-  const element = sut.getByTestId(elementId);
-  expect(element.childElementCount).toBe(count);
-}
-
 describe('SignUp Page', () => {
   test('Should start with initial state', () => {
     const { sut } = makeSut();
 
     const validationError = 'Campo obrigatório';
 
-    testChildCount(sut, 'formStatus', 0);
+    Helpers.testChildCount(sut, 'formStatus', 0);
 
     const submitButton = sut.getByText('Entrar') as HTMLButtonElement;
     expect(submitButton.disabled).toBeTruthy();
 
-    testStatusForField(sut, 'name', validationError);
-    testStatusForField(sut, 'email', validationError);
-    testStatusForField(sut, 'password', validationError);
-    testStatusForField(sut, 'passwordConfirmation', validationError);
+    Helpers.testStatusForField(sut, 'name', validationError);
+    Helpers.testStatusForField(sut, 'email', validationError);
+    Helpers.testStatusForField(sut, 'password', validationError);
+    Helpers.testStatusForField(sut, 'passwordConfirmation', validationError);
   });
 });
