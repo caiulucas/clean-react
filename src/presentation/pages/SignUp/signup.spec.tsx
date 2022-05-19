@@ -79,4 +79,28 @@ describe('SignUp Page', () => {
     Helpers.populateField(sut, 'passwordConfirmation');
     Helpers.testStatusForField(sut, 'passwordConfirmation', validationError);
   });
+
+  test('Should show valid name if Validation succeeds', () => {
+    const { sut } = makeSut();
+    Helpers.populateField(sut, 'name');
+    Helpers.testStatusForField(sut, 'name');
+  });
+
+  test('Should show valid email if Validation succeeds', () => {
+    const { sut } = makeSut();
+    Helpers.populateField(sut, 'email');
+    Helpers.testStatusForField(sut, 'email');
+  });
+
+  test('Should show valid password if Validation succeeds', () => {
+    const { sut } = makeSut();
+    Helpers.populateField(sut, 'password');
+    Helpers.testStatusForField(sut, 'password');
+  });
+
+  test('Should show valid passwordConfirmation if Validation succeeds', () => {
+    const { sut } = makeSut();
+    Helpers.populateField(sut, 'passwordConfirmation');
+    Helpers.testStatusForField(sut, 'passwordConfirmation');
+  });
 });
