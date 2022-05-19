@@ -20,7 +20,7 @@ type Props = {
 export function SignUp({ validation }: Props) {
   const [isLoading] = useState(false);
   const [mainError] = useState('');
-  const [fields] = useState({
+  const [fields, setFields] = useState({
     name: '',
   });
   const [inputErrors, setInputErrors] = useState({
@@ -42,11 +42,15 @@ export function SignUp({ validation }: Props) {
 
   useEffect(() => validate('name'), [validate]);
 
+  function changeFields(fields: object) {
+    setFields(oldState => ({ ...oldState, ...fields }));
+  }
+
   return (
     <div className={styles.login}>
       <LoginHeader />
 
-      <FormProvider value={{ isLoading, inputErrors, mainError }}>
+      <FormProvider value={{ isLoading, inputErrors, mainError, changeFields }}>
         <Form>
           <h2>Login</h2>
           <Input type="text" name="name" placeholder="Digite seu nome" />
