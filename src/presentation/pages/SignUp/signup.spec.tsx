@@ -43,7 +43,7 @@ describe('SignUp Page', () => {
     expect(submitButton.disabled).toBeTruthy();
 
     Helpers.testStatusForField(sut, 'name', validationError);
-    Helpers.testStatusForField(sut, 'email', 'Campo obrigatório');
+    Helpers.testStatusForField(sut, 'email', validationError);
     Helpers.testStatusForField(sut, 'password', 'Campo obrigatório');
     Helpers.testStatusForField(
       sut,
@@ -58,5 +58,13 @@ describe('SignUp Page', () => {
 
     Helpers.populateField(sut, 'name');
     Helpers.testStatusForField(sut, 'name', validationError);
+  });
+
+  test('Should show email error if Validation fails', () => {
+    const validationError = faker.random.words();
+    const { sut } = makeSut({ validationError });
+
+    Helpers.populateField(sut, 'email');
+    Helpers.testStatusForField(sut, 'email', validationError);
   });
 });
