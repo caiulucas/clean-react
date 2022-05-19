@@ -34,7 +34,7 @@ function makeSut(params?: SutParams): SutTypes {
 
 describe('SignUp Page', () => {
   test('Should start with initial state', () => {
-    const validationError = faker.name.findName();
+    const validationError = faker.random.words();
     const { sut } = makeSut({ validationError });
 
     Helpers.testChildCount(sut, 'formStatus', 0);
@@ -44,7 +44,7 @@ describe('SignUp Page', () => {
 
     Helpers.testStatusForField(sut, 'name', validationError);
     Helpers.testStatusForField(sut, 'email', validationError);
-    Helpers.testStatusForField(sut, 'password', 'Campo obrigatório');
+    Helpers.testStatusForField(sut, 'password', validationError);
     Helpers.testStatusForField(
       sut,
       'passwordConfirmation',
@@ -66,5 +66,13 @@ describe('SignUp Page', () => {
 
     Helpers.populateField(sut, 'email');
     Helpers.testStatusForField(sut, 'email', validationError);
+  });
+
+  test('Should show password error if Validation fails', () => {
+    const validationError = faker.random.words();
+    const { sut } = makeSut({ validationError });
+
+    Helpers.populateField(sut, 'password');
+    Helpers.testStatusForField(sut, 'password', validationError);
   });
 });
