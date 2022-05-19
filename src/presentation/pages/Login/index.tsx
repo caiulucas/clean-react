@@ -25,31 +25,28 @@ type Props = {
 export function Login({ validation, authentication, saveAccessToken }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, setFields] = useState({
-    name: '',
     email: '',
     password: '',
-    passwordConfirmation: '',
   });
   const [mainError, setMainError] = useState('');
   const [inputErrors, setInputErrors] = useState({
-    name: 'Campo obrigatório',
     email: 'Campo obrigatório',
     password: 'Campo obrigatório',
-    passwordConfirmation: 'Campo obrigatório',
   });
 
-  const validate = useCallback(
-    (fieldName: string) => {
-      setInputErrors(oldState => ({
-        ...oldState,
-        [fieldName]: validation?.validate(fieldName, fields[fieldName]),
-      }));
-    },
-    [fields, validation],
-  );
+  useEffect(() => {
+    setInputErrors(oldState => ({
+      ...oldState,
+      email: validation.validate('email', fields.email),
+    }));
+  }, [fields.email, validation]);
 
-  useEffect(() => validate('email'), [validate]);
-  useEffect(() => validate('password'), [validate]);
+  useEffect(() => {
+    setInputErrors(oldState => ({
+      ...oldState,
+      password: validation.validate('password', fields.password),
+    }));
+  }, [fields.password, validation]);
 
   function changeFields(fields: object) {
     setFields(oldState => ({ ...oldState, ...fields }));
