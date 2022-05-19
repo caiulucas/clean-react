@@ -41,6 +41,7 @@ export function SignUp({ validation }: Props) {
   );
 
   useEffect(() => validate('name'), [validate]);
+  useEffect(() => validate('email'), [validate]);
 
   function changeFields(fields: object) {
     setFields(oldState => ({ ...oldState, ...fields }));
