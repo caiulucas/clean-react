@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Authentication } from '@domain/usecases';
@@ -21,12 +22,71 @@ type Props = {
   saveAccessToken: SaveAccessToken;
 };
 
-export function Login(props: Props) {
+export function Login({ validation, authentication, saveAccessToken }: Props) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [fields, setFields] = useState({
+    name: '',
+    email: '',
+    password: '',
+    passwordConfirmation: '',
+  });
+  const [mainError, setMainError] = useState('');
+  const [inputErrors, setInputErrors] = useState({
+    name: 'Campo obrigatório',
+    email: 'Campo obrigatório',
+    password: 'Campo obrigatório',
+    passwordConfirmation: 'Campo obrigatório',
+  });
+
+  const validate = useCallback(
+    (fieldName: string) => {
+      setInputErrors(oldState => ({
+        ...oldState,
+        [fieldName]: validation?.validate(fieldName, fields[fieldName]),
+      }));
+    },
+    [fields, validation],
+  );
+
+  useEffect(() => validate('email'), [validate]);
+  useEffect(() => validate('password'), [validate]);
+
+  function changeFields(fields: object) {
+    setFields(oldState => ({ ...oldState, ...fields }));
+  }
+
+  const onSubmit = useCallback(async () => {
+    try {
+      if (isLoading || inputErrors.email || inputErrors.password) return;
+      setIsLoading(true);
+
+      const account = await authentication.auth({
+        email: fields.email,
+        password: fields.password,
+      });
+
+      await saveAccessToken.save(account.access_token);
+    } catch (error) {
+      setIsLoading(false);
+      setMainError(error.message);
+      throw error;
+    }
+  }, [isLoading, inputErrors, authentication, fields, saveAccessToken]);
+
   return (
     <div className={styles.login}>
       <LoginHeader />
 
-      <FormProvider {...props}>
+      <FormProvider
+        value={{
+          isLoading,
+          fields,
+          mainError,
+          inputErrors,
+          changeFields,
+          onSubmit,
+        }}
+      >
         <Form>
           <h2>Login</h2>
           <Input type="email" name="email" placeholder="Digite seu email" />
