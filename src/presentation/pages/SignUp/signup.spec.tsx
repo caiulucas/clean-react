@@ -4,7 +4,7 @@ import { Router } from 'react-router-dom';
 import { faker } from '@faker-js/faker';
 import { ValidationSpy } from '@presentation/tests';
 import { Helpers } from '@presentation/tests/helpers';
-import { fireEvent, render, RenderResult } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 
 import { SignUp } from '.';
 
@@ -17,17 +17,6 @@ type SutParams = {
 };
 
 const history = createMemoryHistory({ initialEntries: ['/signup'] });
-
-function populateField(
-  sut: RenderResult,
-  elementId: string,
-  value = faker.random.word(),
-) {
-  const input = sut.getByTestId(elementId);
-  fireEvent.input(input, {
-    target: { value },
-  });
-}
 
 function makeSut(params?: SutParams): SutTypes {
   const validationSpy = new ValidationSpy();
@@ -66,8 +55,8 @@ describe('SignUp Page', () => {
   test('Should show name error if Validation fails', () => {
     const validationError = faker.random.words();
     const { sut } = makeSut({ validationError });
-    populateField(sut, 'name');
 
+    Helpers.populateField(sut, 'name');
     Helpers.testStatusForField(sut, 'name', validationError);
   });
 });

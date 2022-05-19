@@ -59,23 +59,6 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockedUsedNavigate,
 }));
 
-function populateEmailField(sut: RenderResult, email = faker.internet.email()) {
-  const emailInput = sut.getByTestId('email');
-  fireEvent.input(emailInput, {
-    target: { value: email },
-  });
-}
-
-function populatePasswordField(
-  sut: RenderResult,
-  password = faker.internet.password(),
-) {
-  const passwordInput = sut.getByTestId('password');
-  fireEvent.input(passwordInput, {
-    target: { value: password },
-  });
-}
-
 function simulateValidSubmit(
   sut: RenderResult,
   fields = {
@@ -83,8 +66,8 @@ function simulateValidSubmit(
     password: faker.internet.password(),
   },
 ) {
-  populateEmailField(sut, fields.email);
-  populatePasswordField(sut, fields.password);
+  Helpers.populateField(sut, 'email', fields.email);
+  Helpers.populateField(sut, 'password', fields.password);
 
   const submitButton = sut.getByText('Entrar');
   fireEvent.click(submitButton);
@@ -115,7 +98,7 @@ describe('Login Page', () => {
     const { sut, validationSpy } = makeSut();
 
     const email = faker.internet.email();
-    populateEmailField(sut, email);
+    Helpers.populateField(sut, 'email', email);
 
     expect(validationSpy.fieldName).toBe('email');
     expect(validationSpy.fieldValue).toBe(email);
@@ -125,7 +108,7 @@ describe('Login Page', () => {
     const { sut, validationSpy } = makeSut();
 
     const password = faker.internet.password();
-    populatePasswordField(sut, password);
+    Helpers.populateField(sut, 'password', password);
 
     expect(validationSpy.fieldName).toBe('password');
     expect(validationSpy.fieldValue).toBe(password);
@@ -135,7 +118,7 @@ describe('Login Page', () => {
     const validationError = faker.random.words();
     const { sut } = makeSut({ validationError });
 
-    populateEmailField(sut);
+    Helpers.populateField(sut, 'email');
 
     const emailStatus = sut.getByTestId('emailStatus');
 
@@ -147,7 +130,7 @@ describe('Login Page', () => {
     const validationError = faker.random.words();
     const { sut } = makeSut({ validationError });
 
-    populatePasswordField(sut);
+    Helpers.populateField(sut, 'password');
 
     const passwordStatus = sut.getByTestId('passwordStatus');
 
@@ -158,7 +141,7 @@ describe('Login Page', () => {
   test('Should show valid email state if validation succeeds', () => {
     const { sut } = makeSut();
 
-    populateEmailField(sut);
+    Helpers.populateField(sut, 'email');
 
     Helpers.testStatusForField(sut, 'email');
   });
@@ -166,7 +149,7 @@ describe('Login Page', () => {
   test('Should show valid password state if validation succeeds', () => {
     const { sut } = makeSut();
 
-    populatePasswordField(sut);
+    Helpers.populateField(sut, 'password');
 
     Helpers.testStatusForField(sut, 'password');
   });
@@ -174,8 +157,8 @@ describe('Login Page', () => {
   test('Should enable submit button if form is valid', () => {
     const { sut } = makeSut();
 
-    populateEmailField(sut);
-    populatePasswordField(sut);
+    Helpers.populateField(sut, 'email');
+    Helpers.populateField(sut, 'password');
 
     const submitButton = sut.getByText('Entrar') as HTMLButtonElement;
     expect(submitButton.disabled).toBeFalsy();
@@ -211,7 +194,7 @@ describe('Login Page', () => {
       validationError: faker.random.words(),
     });
 
-    populateEmailField(sut);
+    Helpers.populateField(sut, 'email');
     fireEvent.submit(sut.getByTestId('form'));
 
     expect(authenticationSpy.callsCount).toBe(0);
