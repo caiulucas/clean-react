@@ -45,11 +45,7 @@ describe('SignUp Page', () => {
     Helpers.testStatusForField(sut, 'name', validationError);
     Helpers.testStatusForField(sut, 'email', validationError);
     Helpers.testStatusForField(sut, 'password', validationError);
-    Helpers.testStatusForField(
-      sut,
-      'passwordConfirmation',
-      'Campo obrigatório',
-    );
+    Helpers.testStatusForField(sut, 'passwordConfirmation', validationError);
   });
 
   test('Should show name error if Validation fails', () => {
@@ -74,5 +70,13 @@ describe('SignUp Page', () => {
 
     Helpers.populateField(sut, 'password');
     Helpers.testStatusForField(sut, 'password', validationError);
+  });
+
+  test('Should show passwordConfirmation  q error if Validation fails', () => {
+    const validationError = faker.random.words();
+    const { sut } = makeSut({ validationError });
+
+    Helpers.populateField(sut, 'passwordConfirmation');
+    Helpers.testStatusForField(sut, 'passwordConfirmation', validationError);
   });
 });
