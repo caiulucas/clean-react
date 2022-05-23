@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
 import { faker } from '@faker-js/faker';
-import { ValidationSpy } from '@presentation/tests';
+import { ValidationSpy, AddAccountSpy } from '@presentation/tests';
 import { Helpers } from '@presentation/tests/helpers';
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 
@@ -10,6 +10,7 @@ import { SignUp } from '.';
 
 type SutTypes = {
   sut: RenderResult;
+  addAccountSpy: AddAccountSpy;
 };
 
 type SutParams = {
@@ -20,16 +21,17 @@ const history = createMemoryHistory({ initialEntries: ['/signup'] });
 
 function makeSut(params?: SutParams): SutTypes {
   const validationSpy = new ValidationSpy();
+  const addAccountSpy = new AddAccountSpy();
 
   validationSpy.errorMessage = params?.validationError;
 
-  return {
-    sut: render(
-      <Router location={history.location} navigator={history}>
-        <SignUp validation={validationSpy} />
-      </Router>,
-    ),
-  };
+  const sut = render(
+    <Router location={history.location} navigator={history}>
+      <SignUp validation={validationSpy} addAccount={addAccountSpy} />
+    </Router>,
+  );
+
+  return { sut, addAccountSpy };
 }
 
 function simulateValidSubmit(
@@ -139,5 +141,25 @@ describe('SignUp Page', () => {
 
     const spinner = sut.getByTestId('spinner');
     expect(spinner).toBeTruthy();
+  });
+
+  test('Should add account with correct values', () => {
+    const { sut, addAccountSpy } = makeSut();
+    const name = faker.name.findName();
+    const email = faker.internet.email();
+    const password = faker.internet.password();
+
+    simulateValidSubmit(sut, {
+      name,
+      email,
+      password,
+    });
+
+    expect(addAccountSpy.params).toEqual({
+      name,
+      email,
+      password,
+      passwordConfirmation: password,
+    });
   });
 });
