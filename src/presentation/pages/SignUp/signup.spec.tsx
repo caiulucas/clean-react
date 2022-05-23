@@ -149,11 +149,7 @@ describe('SignUp Page', () => {
     const email = faker.internet.email();
     const password = faker.internet.password();
 
-    simulateValidSubmit(sut, {
-      name,
-      email,
-      password,
-    });
+    simulateValidSubmit(sut, { name, email, password });
 
     expect(addAccountSpy.params).toEqual({
       name,
@@ -161,5 +157,13 @@ describe('SignUp Page', () => {
       password,
       passwordConfirmation: password,
     });
+  });
+
+  test('Should add account only once', () => {
+    const { sut, addAccountSpy } = makeSut();
+    simulateValidSubmit(sut);
+    simulateValidSubmit(sut);
+
+    expect(addAccountSpy.callsCount).toBe(1);
   });
 });
