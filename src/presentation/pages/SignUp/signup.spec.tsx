@@ -240,4 +240,13 @@ describe('SignUp Page', () => {
     Helpers.testChildCount(sut, 'formStatus', 1);
     Helpers.testElementText(sut, 'mainError', error.message);
   });
+
+  test('Should go to login page', () => {
+    const { sut } = makeSut();
+
+    const register = sut.getByText('Voltar para o login');
+    fireEvent.click(register);
+
+    expect(history.location.pathname).toBe('/login');
+  });
 });
