@@ -56,7 +56,14 @@ export function SignUp({ validation, addAccount }: Props) {
 
   const onSubmit = useCallback(async () => {
     try {
-      if (isLoading) return;
+      if (
+        isLoading ||
+        inputErrors.name ||
+        inputErrors.email ||
+        inputErrors.password ||
+        inputErrors.passwordConfirmation
+      )
+        return;
 
       setIsLoading(true);
 
