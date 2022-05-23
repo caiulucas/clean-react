@@ -68,7 +68,14 @@ export function SignUp({ validation }: Props) {
             name="passwordConfirmation"
             placeholder="Repita sua senha"
           />
-          <SubmitButton />
+          <SubmitButton
+            disabled={
+              !!inputErrors.name ||
+              !!inputErrors.email ||
+              !!inputErrors.password ||
+              !!inputErrors.passwordConfirmation
+            }
+          />
 
           <span className={styles.link}>Voltar para o login</span>
 

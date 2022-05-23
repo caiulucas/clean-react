@@ -92,7 +92,9 @@ export function Login({ validation, authentication, saveAccessToken }: Props) {
             name="password"
             placeholder="Digite sua senha"
           />
-          <SubmitButton />
+          <SubmitButton
+            disabled={!!inputErrors.email || !!inputErrors.password}
+          />
 
           <Link to="/signup" className={styles.link}>
             Usuário novo? Crie uma conta

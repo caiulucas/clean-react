@@ -1,15 +1,12 @@
 // import styles from './styles.scss';
 
-import { useForm } from '@presentation/hooks/useForm';
+type Props = {
+  disabled?: boolean;
+};
 
-export function SubmitButton() {
-  const { inputErrors } = useForm();
-
+export function SubmitButton({ disabled = false }: Props) {
   return (
-    <button
-      type="submit"
-      disabled={!!inputErrors.email || !!inputErrors.password}
-    >
+    <button type="submit" disabled={disabled}>
       Entrar
     </button>
   );
