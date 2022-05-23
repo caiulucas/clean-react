@@ -56,6 +56,8 @@ export function SignUp({ validation, addAccount }: Props) {
 
   const onSubmit = useCallback(async () => {
     try {
+      if (isLoading) return;
+
       setIsLoading(true);
 
       await addAccount.add({
@@ -67,7 +69,7 @@ export function SignUp({ validation, addAccount }: Props) {
     } catch (err) {
       setIsLoading(false);
     }
-  }, [addAccount, fields]);
+  }, [addAccount, fields, isLoading]);
 
   return (
     <div className={styles.login}>
