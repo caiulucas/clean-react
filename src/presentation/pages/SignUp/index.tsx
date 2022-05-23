@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { AddAccount } from '@domain/usecases';
 import {
   Footer,
   Form,
@@ -15,13 +16,17 @@ import styles from './styles.scss';
 
 type Props = {
   validation: Validation;
+  addAccount: AddAccount;
 };
 
-export function SignUp({ validation }: Props) {
+export function SignUp({ validation, addAccount }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [mainError] = useState('');
   const [fields, setFields] = useState({
     name: '',
+    email: '',
+    password: '',
+    passwordConfirmation: '',
   });
   const [inputErrors, setInputErrors] = useState({
     name: 'Campo obrigatório',
@@ -50,8 +55,19 @@ export function SignUp({ validation }: Props) {
   }
 
   const onSubmit = useCallback(async () => {
-    setIsLoading(true);
-  }, []);
+    try {
+      setIsLoading(true);
+
+      await addAccount.add({
+        name: fields.name,
+        email: fields.email,
+        password: fields.password,
+        passwordConfirmation: fields.passwordConfirmation,
+      });
+    } catch (err) {
+      setIsLoading(false);
+    }
+  }, [addAccount, fields]);
 
   return (
     <div className={styles.login}>
