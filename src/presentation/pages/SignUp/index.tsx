@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { AddAccount } from '@domain/usecases';
+import { AddAccount, SaveAccessToken } from '@domain/usecases';
 import {
   Footer,
   Form,
@@ -17,9 +17,10 @@ import styles from './styles.scss';
 type Props = {
   validation: Validation;
   addAccount: AddAccount;
+  saveAccessToken: SaveAccessToken;
 };
 
-export function SignUp({ validation, addAccount }: Props) {
+export function SignUp({ validation, addAccount, saveAccessToken }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [mainError, setMainError] = useState('');
   const [fields, setFields] = useState({
@@ -67,17 +68,19 @@ export function SignUp({ validation, addAccount }: Props) {
 
       setIsLoading(true);
 
-      await addAccount.add({
+      const account = await addAccount.add({
         name: fields.name,
         email: fields.email,
         password: fields.password,
         passwordConfirmation: fields.passwordConfirmation,
       });
+
+      await saveAccessToken.save(account.access_token);
     } catch (err) {
       setIsLoading(false);
       setMainError(err.message);
     }
-  }, [addAccount, fields, inputErrors, isLoading]);
+  }, [addAccount, saveAccessToken, fields, inputErrors, isLoading]);
 
   return (
     <div className={styles.login}>
