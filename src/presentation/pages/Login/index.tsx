@@ -24,6 +24,7 @@ type Props = {
 
 export function Login({ validation, authentication, saveAccessToken }: Props) {
   const [isLoading, setIsLoading] = useState(false);
+  const [isFormInvalid, setIsFormInvalid] = useState(false);
   const [fields, setFields] = useState({
     email: '',
     password: '',
@@ -35,17 +36,17 @@ export function Login({ validation, authentication, saveAccessToken }: Props) {
   });
 
   useEffect(() => {
-    setInputErrors(oldState => ({
-      ...oldState,
-      email: validation.validate('email', fields.email),
-    }));
+    const emailError = validation.validate('email', fields.email);
+
+    setIsFormInvalid(!!emailError);
+    setInputErrors(oldState => ({ ...oldState, email: emailError }));
   }, [fields.email, validation]);
 
   useEffect(() => {
-    setInputErrors(oldState => ({
-      ...oldState,
-      password: validation.validate('password', fields.password),
-    }));
+    const passwordError = validation.validate('password', fields.password);
+
+    setIsFormInvalid(oldState => oldState || !!passwordError);
+    setInputErrors(oldState => ({ ...oldState, password: passwordError }));
   }, [fields.password, validation]);
 
   function changeFields(fields: object) {
@@ -54,7 +55,7 @@ export function Login({ validation, authentication, saveAccessToken }: Props) {
 
   const onSubmit = useCallback(async () => {
     try {
-      if (isLoading || inputErrors.email || inputErrors.password) return;
+      if (isLoading || isFormInvalid) return;
       setIsLoading(true);
 
       const account = await authentication.auth({
@@ -68,7 +69,7 @@ export function Login({ validation, authentication, saveAccessToken }: Props) {
       setMainError(error.message);
       throw error;
     }
-  }, [isLoading, inputErrors, authentication, fields, saveAccessToken]);
+  }, [isLoading, isFormInvalid, authentication, fields, saveAccessToken]);
 
   return (
     <div className={styles.login}>
@@ -77,7 +78,7 @@ export function Login({ validation, authentication, saveAccessToken }: Props) {
       <FormProvider
         value={{
           isLoading,
-          fields,
+          isFormInvalid,
           mainError,
           inputErrors,
           changeFields,
@@ -92,9 +93,7 @@ export function Login({ validation, authentication, saveAccessToken }: Props) {
             name="password"
             placeholder="Digite sua senha"
           />
-          <SubmitButton
-            disabled={!!inputErrors.email || !!inputErrors.password}
-          />
+          <SubmitButton title="Entrar" />
 
           <Link to="/signup" className={styles.link}>
             Usuário novo? Crie uma conta

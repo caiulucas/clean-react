@@ -64,7 +64,7 @@ function simulateValidSubmit(
   Helpers.populateField(sut, 'password', fields.password);
   Helpers.populateField(sut, 'passwordConfirmation', fields.password);
 
-  const submitButton = sut.getByText('Entrar');
+  const submitButton = sut.getByText('Cadastrar');
   fireEvent.click(submitButton);
 }
 
@@ -81,7 +81,7 @@ describe('SignUp Page', () => {
 
     Helpers.testChildCount(sut, 'formStatus', 0);
 
-    const submitButton = sut.getByText('Entrar') as HTMLButtonElement;
+    const submitButton = sut.getByText('Cadastrar') as HTMLButtonElement;
     expect(submitButton.disabled).toBeTruthy();
 
     Helpers.testStatusForField(sut, 'name', validationError);
@@ -154,7 +154,7 @@ describe('SignUp Page', () => {
     Helpers.populateField(sut, 'password');
     Helpers.populateField(sut, 'passwordConfirmation');
 
-    const submitButton = sut.getByText('Entrar') as HTMLButtonElement;
+    const submitButton = sut.getByText('Cadastrar') as HTMLButtonElement;
     expect(submitButton.disabled).toBeFalsy();
   });
 

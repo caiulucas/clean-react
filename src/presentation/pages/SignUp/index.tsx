@@ -23,6 +23,7 @@ type Props = {
 
 export function SignUp({ validation, addAccount, saveAccessToken }: Props) {
   const [isLoading, setIsLoading] = useState(false);
+  const [isFormInvalid, setIsFormInvalid] = useState(false);
   const [mainError, setMainError] = useState('');
   const [fields, setFields] = useState({
     name: '',
@@ -37,20 +38,27 @@ export function SignUp({ validation, addAccount, saveAccessToken }: Props) {
     passwordConfirmation: 'Campo obrigatório',
   });
 
-  const validate = useCallback(
-    (fieldName: string) => {
-      setInputErrors(oldState => ({
-        ...oldState,
-        [fieldName]: validation?.validate(fieldName, fields[fieldName]),
-      }));
-    },
-    [fields, validation],
-  );
-
-  useEffect(() => validate('name'), [validate]);
-  useEffect(() => validate('email'), [validate]);
-  useEffect(() => validate('password'), [validate]);
-  useEffect(() => validate('passwordConfirmation'), [validate]);
+  useEffect(() => {
+    const nameError = validation.validate('name', fields.name);
+    const emailError = validation.validate('email', fields.email);
+    const passwordError = validation.validate('password', fields.password);
+    const passwordConfirmationError = validation.validate(
+      'passwordConfirmation',
+      fields.passwordConfirmation,
+    );
+    setIsFormInvalid(
+      !!nameError ||
+        !!emailError ||
+        !!passwordError ||
+        !!passwordConfirmationError,
+    );
+    setInputErrors({
+      name: nameError,
+      email: emailError,
+      password: passwordError,
+      passwordConfirmation: passwordConfirmationError,
+    });
+  }, [fields, validation]);
 
   function changeFields(fields: object) {
     setFields(oldState => ({ ...oldState, ...fields }));
@@ -58,14 +66,7 @@ export function SignUp({ validation, addAccount, saveAccessToken }: Props) {
 
   const onSubmit = useCallback(async () => {
     try {
-      if (
-        isLoading ||
-        inputErrors.name ||
-        inputErrors.email ||
-        inputErrors.password ||
-        inputErrors.passwordConfirmation
-      )
-        return;
+      if (isLoading || isFormInvalid) return;
 
       setIsLoading(true);
 
@@ -81,14 +82,21 @@ export function SignUp({ validation, addAccount, saveAccessToken }: Props) {
       setIsLoading(false);
       setMainError(err.message);
     }
-  }, [addAccount, saveAccessToken, fields, inputErrors, isLoading]);
+  }, [addAccount, saveAccessToken, fields, isLoading, isFormInvalid]);
 
   return (
     <div className={styles.login}>
       <LoginHeader />
 
       <FormProvider
-        value={{ isLoading, inputErrors, mainError, changeFields, onSubmit }}
+        value={{
+          isLoading,
+          isFormInvalid,
+          inputErrors,
+          mainError,
+          changeFields,
+          onSubmit,
+        }}
       >
         <Form>
           <h2>Login</h2>
@@ -104,14 +112,7 @@ export function SignUp({ validation, addAccount, saveAccessToken }: Props) {
             name="passwordConfirmation"
             placeholder="Repita sua senha"
           />
-          <SubmitButton
-            disabled={
-              !!inputErrors.name ||
-              !!inputErrors.email ||
-              !!inputErrors.password ||
-              !!inputErrors.passwordConfirmation
-            }
-          />
+          <SubmitButton title="Cadastrar" />
 
           <Link to="/login" className={styles.link}>
             Voltar para o login

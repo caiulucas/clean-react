@@ -1,13 +1,17 @@
 // import styles from './styles.scss';
 
+import { useForm } from '@presentation/hooks/useForm';
+
 type Props = {
-  disabled?: boolean;
+  title: string;
 };
 
-export function SubmitButton({ disabled = false }: Props) {
+export function SubmitButton({ title }: Props) {
+  const { isFormInvalid } = useForm();
+
   return (
-    <button type="submit" disabled={disabled}>
-      Entrar
+    <button type="submit" disabled={isFormInvalid}>
+      {title}
     </button>
   );
 }

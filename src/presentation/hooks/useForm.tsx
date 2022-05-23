@@ -1,24 +1,20 @@
 import { createContext, ReactNode, useContext } from 'react';
 
-type Fields = {
-  email: string;
-};
-
 type StateProps = {
   isLoading: boolean;
+  isFormInvalid: boolean;
   mainError: string;
   inputErrors: {
     email: string;
     password: string;
   };
-  fields: Fields;
   changeFields(fields: object): void;
   onSubmit(): Promise<void>;
 };
 
 type Props = {
   children: ReactNode;
-  value: any;
+  value: StateProps;
 };
 
 const FormContext = createContext<StateProps>(null);
