@@ -73,11 +73,6 @@ function simulateValidSubmit(
   fireEvent.click(submitButton);
 }
 
-function testElementText(sut: RenderResult, elementId: string, text: string) {
-  const element = sut.getByTestId(elementId);
-  expect(element.textContent).toBe(text);
-}
-
 describe('Login Page', () => {
   afterEach(() => cleanup);
 
@@ -210,7 +205,7 @@ describe('Login Page', () => {
     });
 
     Helpers.testChildCount(sut, 'formStatus', 1);
-    testElementText(sut, 'mainError', error.message);
+    Helpers.testElementText(sut, 'mainError', error.message);
   });
 
   test('Should call SaveAccessToken on success', async () => {
@@ -237,7 +232,7 @@ describe('Login Page', () => {
     });
 
     Helpers.testChildCount(sut, 'formStatus', 1);
-    testElementText(sut, 'mainError', error.message);
+    Helpers.testElementText(sut, 'mainError', error.message);
   });
 
   test('Should go to signup page', () => {

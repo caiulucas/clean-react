@@ -30,3 +30,12 @@ export function populateField(
     target: { value },
   });
 }
+
+export function testElementText(
+  sut: RenderResult,
+  elementId: string,
+  text: string,
+) {
+  const element = sut.getByTestId(elementId);
+  expect(element.textContent).toBe(text);
+}
