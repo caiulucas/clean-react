@@ -3,7 +3,11 @@ import { Router } from 'react-router-dom';
 
 import { EmailInUseError } from '@domain/errors';
 import { faker } from '@faker-js/faker';
-import { ValidationSpy, AddAccountSpy } from '@presentation/tests';
+import {
+  ValidationSpy,
+  AddAccountSpy,
+  SaveAccessTokenMock,
+} from '@presentation/tests';
 import { Helpers } from '@presentation/tests/helpers';
 import {
   act,
@@ -18,6 +22,7 @@ import { SignUp } from '.';
 type SutTypes = {
   sut: RenderResult;
   addAccountSpy: AddAccountSpy;
+  saveAccessTokenMock: SaveAccessTokenMock;
 };
 
 type SutParams = {
@@ -29,16 +34,21 @@ const history = createMemoryHistory({ initialEntries: ['/signup'] });
 function makeSut(params?: SutParams): SutTypes {
   const validationSpy = new ValidationSpy();
   const addAccountSpy = new AddAccountSpy();
+  const saveAccessTokenMock = new SaveAccessTokenMock();
 
   validationSpy.errorMessage = params?.validationError;
 
   const sut = render(
     <Router location={history.location} navigator={history}>
-      <SignUp validation={validationSpy} addAccount={addAccountSpy} />
+      <SignUp
+        validation={validationSpy}
+        addAccount={addAccountSpy}
+        saveAccessToken={saveAccessTokenMock}
+      />
     </Router>,
   );
 
-  return { sut, addAccountSpy };
+  return { sut, addAccountSpy, saveAccessTokenMock };
 }
 
 function simulateValidSubmit(
@@ -57,6 +67,12 @@ function simulateValidSubmit(
   const submitButton = sut.getByText('Entrar');
   fireEvent.click(submitButton);
 }
+
+const mockedUsedNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...(jest.requireActual('react-router-dom') as any),
+  useNavigate: () => mockedUsedNavigate,
+}));
 
 describe('SignUp Page', () => {
   test('Should start with initial state', () => {
@@ -196,5 +212,18 @@ describe('SignUp Page', () => {
 
     Helpers.testChildCount(sut, 'formStatus', 1);
     Helpers.testElementText(sut, 'mainError', error.message);
+  });
+
+  test('Should call SaveAccessToken on success', async () => {
+    const { sut, addAccountSpy, saveAccessTokenMock } = makeSut();
+
+    simulateValidSubmit(sut);
+    await waitFor(() => sut.getByTestId('form'));
+
+    expect(saveAccessTokenMock.accessToken).toBe(
+      addAccountSpy.account.access_token,
+    );
+
+    expect(mockedUsedNavigate).toHaveBeenCalledWith('/', { replace: true });
   });
 });
