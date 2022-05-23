@@ -72,7 +72,7 @@ describe('SignUp Page', () => {
     Helpers.testStatusForField(sut, 'password', validationError);
   });
 
-  test('Should show passwordConfirmation  q error if Validation fails', () => {
+  test('Should show passwordConfirmation error if Validation fails', () => {
     const validationError = faker.random.words();
     const { sut } = makeSut({ validationError });
 
@@ -102,5 +102,17 @@ describe('SignUp Page', () => {
     const { sut } = makeSut();
     Helpers.populateField(sut, 'passwordConfirmation');
     Helpers.testStatusForField(sut, 'passwordConfirmation');
+  });
+
+  test('Should enable submit button if form is valid', () => {
+    const { sut } = makeSut();
+
+    Helpers.populateField(sut, 'name');
+    Helpers.populateField(sut, 'email');
+    Helpers.populateField(sut, 'password');
+    Helpers.populateField(sut, 'passwordConfirmation');
+
+    const submitButton = sut.getByText('Entrar') as HTMLButtonElement;
+    expect(submitButton.disabled).toBeFalsy();
   });
 });
