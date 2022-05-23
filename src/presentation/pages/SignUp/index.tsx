@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { AddAccount, SaveAccessToken } from '@domain/usecases';
 import {
@@ -112,7 +113,9 @@ export function SignUp({ validation, addAccount, saveAccessToken }: Props) {
             }
           />
 
-          <span className={styles.link}>Voltar para o login</span>
+          <Link to="/login" className={styles.link}>
+            Voltar para o login
+          </Link>
 
           <FormStatus />
         </Form>
