@@ -226,4 +226,18 @@ describe('SignUp Page', () => {
 
     expect(mockedUsedNavigate).toHaveBeenCalledWith('/', { replace: true });
   });
+
+  test('Should present error if SaveAccessToken fails', async () => {
+    const { sut, saveAccessTokenMock } = makeSut();
+    const error = new EmailInUseError();
+
+    await act(async () => {
+      jest.spyOn(saveAccessTokenMock, 'save').mockRejectedValueOnce(error);
+      simulateValidSubmit(sut);
+      await waitFor(() => sut.getByTestId('form'));
+    });
+
+    Helpers.testChildCount(sut, 'formStatus', 1);
+    Helpers.testElementText(sut, 'mainError', error.message);
+  });
 });
