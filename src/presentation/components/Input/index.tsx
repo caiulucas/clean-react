@@ -5,7 +5,7 @@ import { useForm } from '@presentation/hooks/useForm';
 import styles from './styles.scss';
 
 type Props = React.FormHTMLAttributes<HTMLInputElement> & {
-  type: string;
+  type?: string;
   name: string;
 };
 

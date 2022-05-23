@@ -1,13 +1,14 @@
+import { makeRemoteAddAccount } from '@main/factories/usecases/addAccount/remote-add-account-factory';
 import { makeLocalSaveAccessToken } from '@main/factories/usecases/save-access-token/local-save-access-token';
 import { SignUp } from '@presentation/pages/SignUp';
 
-import { makeLoginValidation } from './signup-validation-factory';
+import { makeSignUpValidation } from './signup-validation-factory';
 
-export function MakeLogin() {
+export function MakeSignUp() {
   return (
     <SignUp
       addAccount={makeRemoteAddAccount()}
-      validation={makeLoginValidation()}
+      validation={makeSignUpValidation()}
       saveAccessToken={makeLocalSaveAccessToken()}
     />
   );

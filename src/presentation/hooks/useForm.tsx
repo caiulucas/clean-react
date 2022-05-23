@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext } from 'react';
 
-type StateProps = {
+export type StateProps = {
   isLoading: boolean;
   isFormInvalid: boolean;
   mainError: string;
