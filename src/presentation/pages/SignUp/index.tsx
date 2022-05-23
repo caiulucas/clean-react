@@ -18,7 +18,7 @@ type Props = {
 };
 
 export function SignUp({ validation }: Props) {
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [mainError] = useState('');
   const [fields, setFields] = useState({
     name: '',
@@ -49,11 +49,17 @@ export function SignUp({ validation }: Props) {
     setFields(oldState => ({ ...oldState, ...fields }));
   }
 
+  const onSubmit = useCallback(async () => {
+    setIsLoading(true);
+  }, []);
+
   return (
     <div className={styles.login}>
       <LoginHeader />
 
-      <FormProvider value={{ isLoading, inputErrors, mainError, changeFields }}>
+      <FormProvider
+        value={{ isLoading, inputErrors, mainError, changeFields, onSubmit }}
+      >
         <Form>
           <h2>Login</h2>
           <Input type="text" name="name" placeholder="Digite seu nome" />
