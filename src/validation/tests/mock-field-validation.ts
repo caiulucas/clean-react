@@ -8,7 +8,7 @@ export class FieldValidationSpy implements FieldValidation {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  validate(_value: string): Error {
+  validate(_input: object): Error {
     return this.error;
   }
 }

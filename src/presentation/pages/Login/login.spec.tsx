@@ -89,26 +89,6 @@ describe('Login Page', () => {
     Helpers.testStatusForField(sut, 'password', validationError);
   });
 
-  test('Should call validation with correct email', () => {
-    const { sut, validationSpy } = makeSut();
-
-    const email = faker.internet.email();
-    Helpers.populateField(sut, 'email', email);
-
-    expect(validationSpy.fieldName).toBe('email');
-    expect(validationSpy.fieldValue).toBe(email);
-  });
-
-  test('Should call validation with correct password', () => {
-    const { sut, validationSpy } = makeSut();
-
-    const password = faker.internet.password();
-    Helpers.populateField(sut, 'password', password);
-
-    expect(validationSpy.fieldName).toBe('password');
-    expect(validationSpy.fieldValue).toBe(password);
-  });
-
   test('Should show email error if validation fails', () => {
     const validationError = faker.random.words();
     const { sut } = makeSut({ validationError });

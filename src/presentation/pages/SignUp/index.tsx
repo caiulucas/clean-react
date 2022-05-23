@@ -39,12 +39,12 @@ export function SignUp({ validation, addAccount, saveAccessToken }: Props) {
   });
 
   useEffect(() => {
-    const nameError = validation.validate('name', fields.name);
-    const emailError = validation.validate('email', fields.email);
-    const passwordError = validation.validate('password', fields.password);
+    const nameError = validation.validate('name', fields);
+    const emailError = validation.validate('email', fields);
+    const passwordError = validation.validate('password', fields);
     const passwordConfirmationError = validation.validate(
       'passwordConfirmation',
-      fields.passwordConfirmation,
+      fields,
     );
     setIsFormInvalid(
       !!nameError ||

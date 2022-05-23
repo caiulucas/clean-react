@@ -30,7 +30,9 @@ describe('ValidationComposite', () => {
     fieldValidationsSpies[0].error = new Error(errorMessage);
     fieldValidationsSpies[1].error = new Error(faker.random.words());
 
-    const error = sut.validate(fieldName, faker.random.words());
+    const error = sut.validate(fieldName, {
+      [fieldName]: faker.random.words(),
+    });
     expect(error).toBe(errorMessage);
   });
 
@@ -38,7 +40,9 @@ describe('ValidationComposite', () => {
     const fieldName = faker.database.column();
 
     const { sut } = makeSut(fieldName);
-    const error = sut.validate(fieldName, faker.random.words());
+    const error = sut.validate(fieldName, {
+      [fieldName]: faker.random.words(),
+    });
 
     expect(error).toBeFalsy();
   });

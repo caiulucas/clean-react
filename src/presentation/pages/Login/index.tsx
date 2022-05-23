@@ -36,18 +36,12 @@ export function Login({ validation, authentication, saveAccessToken }: Props) {
   });
 
   useEffect(() => {
-    const emailError = validation.validate('email', fields.email);
+    const emailError = validation.validate('email', fields);
+    const passwordError = validation.validate('password', fields);
 
-    setIsFormInvalid(!!emailError);
-    setInputErrors(oldState => ({ ...oldState, email: emailError }));
-  }, [fields.email, validation]);
-
-  useEffect(() => {
-    const passwordError = validation.validate('password', fields.password);
-
-    setIsFormInvalid(oldState => oldState || !!passwordError);
-    setInputErrors(oldState => ({ ...oldState, password: passwordError }));
-  }, [fields.password, validation]);
+    setIsFormInvalid(!!emailError || !!passwordError);
+    setInputErrors({ email: emailError, password: passwordError });
+  }, [fields, validation]);
 
   function changeFields(fields: object) {
     setFields(oldState => ({ ...oldState, ...fields }));

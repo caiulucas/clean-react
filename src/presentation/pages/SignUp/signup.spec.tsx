@@ -11,6 +11,7 @@ import {
 import { Helpers } from '@presentation/tests/helpers';
 import {
   act,
+  cleanup,
   fireEvent,
   render,
   RenderResult,
@@ -75,6 +76,8 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('SignUp Page', () => {
+  afterEach(() => cleanup);
+
   test('Should start with initial state', () => {
     const validationError = faker.random.words();
     const { sut } = makeSut({ validationError });
