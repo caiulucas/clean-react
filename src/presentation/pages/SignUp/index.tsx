@@ -21,7 +21,7 @@ type Props = {
 
 export function SignUp({ validation, addAccount }: Props) {
   const [isLoading, setIsLoading] = useState(false);
-  const [mainError] = useState('');
+  const [mainError, setMainError] = useState('');
   const [fields, setFields] = useState({
     name: '',
     email: '',
@@ -75,8 +75,9 @@ export function SignUp({ validation, addAccount }: Props) {
       });
     } catch (err) {
       setIsLoading(false);
+      setMainError(err.message);
     }
-  }, [addAccount, fields, isLoading]);
+  }, [addAccount, fields, inputErrors, isLoading]);
 
   return (
     <div className={styles.login}>
