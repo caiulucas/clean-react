@@ -4,7 +4,7 @@ import { Router } from 'react-router-dom';
 import { faker } from '@faker-js/faker';
 import { ValidationSpy } from '@presentation/tests';
 import { Helpers } from '@presentation/tests/helpers';
-import { render, RenderResult } from '@testing-library/react';
+import { fireEvent, render, RenderResult } from '@testing-library/react';
 
 import { SignUp } from '.';
 
@@ -30,6 +30,23 @@ function makeSut(params?: SutParams): SutTypes {
       </Router>,
     ),
   };
+}
+
+function simulateValidSubmit(
+  sut: RenderResult,
+  fields = {
+    name: faker.name.findName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+  },
+) {
+  Helpers.populateField(sut, 'name', fields.name);
+  Helpers.populateField(sut, 'email', fields.email);
+  Helpers.populateField(sut, 'password', fields.password);
+  Helpers.populateField(sut, 'passwordConfirmation', fields.password);
+
+  const submitButton = sut.getByText('Entrar');
+  fireEvent.click(submitButton);
 }
 
 describe('SignUp Page', () => {
@@ -114,5 +131,13 @@ describe('SignUp Page', () => {
 
     const submitButton = sut.getByText('Entrar') as HTMLButtonElement;
     expect(submitButton.disabled).toBeFalsy();
+  });
+
+  test('Should show spinner on submit', () => {
+    const { sut } = makeSut();
+    simulateValidSubmit(sut);
+
+    const spinner = sut.getByTestId('spinner');
+    expect(spinner).toBeTruthy();
   });
 });
