@@ -166,4 +166,15 @@ describe('SignUp Page', () => {
 
     expect(addAccountSpy.callsCount).toBe(1);
   });
+
+  test('Should not add account if form is invalid', () => {
+    const { sut, addAccountSpy } = makeSut({
+      validationError: faker.random.words(),
+    });
+
+    Helpers.populateField(sut, 'email');
+    fireEvent.submit(sut.getByTestId('form'));
+
+    expect(addAccountSpy.callsCount).toBe(0);
+  });
 });
