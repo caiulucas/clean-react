@@ -1,4 +1,7 @@
 import { faker } from '@faker-js/faker';
+
+const baseUrl: string = Cypress.config().baseUrl;
+
 describe('Login', () => {
   beforeEach(() => cy.visit('login'));
 
@@ -43,5 +46,23 @@ describe('Login', () => {
 
     cy.get('[type="submit"]').should('not.have.attr', 'disabled');
     cy.getByTestId('formStatus').should('not.have.descendants');
+  });
+
+  it('Should present error if invalid credentials are provided', () => {
+    cy.getByTestId('email').type(faker.internet.email());
+    cy.getByTestId('password').type(faker.internet.password());
+
+    cy.get('[type="submit"]').click();
+    cy.getByTestId('formStatus')
+      .getByTestId('spinner')
+      .should('exist')
+      .getByTestId('mainError')
+      .should('not.exist')
+      .getByTestId('spinner')
+      .should('not.exist')
+      .getByTestId('mainError')
+      .should('contain.text', 'Credenciais inválidas');
+
+    cy.url().should('eq', `${baseUrl}/login`);
   });
 });
