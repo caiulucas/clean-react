@@ -29,4 +29,19 @@ describe('Login', () => {
     cy.get('[type="submit"]').should('have.attr', 'disabled');
     cy.getByTestId('formStatus').should('not.have.descendants');
   });
+
+  it('Should present valid state if form is valid', () => {
+    cy.getByTestId('email').type(faker.internet.email());
+    cy.getByTestId('emailStatus')
+      .should('have.attr', 'title', 'Tudo certo!')
+      .should('contain.text', '🟢');
+
+    cy.getByTestId('password').type(faker.internet.password());
+    cy.getByTestId('passwordStatus')
+      .should('have.attr', 'title', 'Tudo certo!')
+      .should('contain.text', '🟢');
+
+    cy.get('[type="submit"]').should('not.have.attr', 'disabled');
+    cy.getByTestId('formStatus').should('not.have.descendants');
+  });
 });
