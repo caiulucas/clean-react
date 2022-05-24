@@ -10,11 +10,13 @@
   "env": {
     "browser": true,
     "es2021": true,
-    "jest/globals": true
+    "jest/globals": true,
+    "cypress/globals": true
   },
   "extends": [
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:cypress/recommended",
     "standard",
     "prettier"
   ],
@@ -28,6 +30,7 @@
   },
   "plugins": [
     "react",
+    "cypress",
     "@typescript-eslint",
     "eslint-plugin-import-helpers",
     "jest",
