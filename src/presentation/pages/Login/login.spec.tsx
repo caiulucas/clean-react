@@ -195,7 +195,7 @@ describe('Login Page', () => {
     await waitFor(() => sut.getByTestId('form'));
 
     expect(saveAccessTokenMock.accessToken).toBe(
-      authenticationSpy.account.access_token,
+      authenticationSpy.account.accessToken,
     );
 
     expect(mockedUsedNavigate).toHaveBeenCalledWith('/', { replace: true });

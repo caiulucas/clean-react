@@ -224,7 +224,7 @@ describe('SignUp Page', () => {
     await waitFor(() => sut.getByTestId('form'));
 
     expect(saveAccessTokenMock.accessToken).toBe(
-      addAccountSpy.account.access_token,
+      addAccountSpy.account.accessToken,
     );
 
     expect(mockedUsedNavigate).toHaveBeenCalledWith('/', { replace: true });

@@ -57,7 +57,7 @@ export function Login({ validation, authentication, saveAccessToken }: Props) {
         password: fields.password,
       });
 
-      await saveAccessToken.save(account.access_token);
+      await saveAccessToken.save(account.accessToken);
     } catch (error) {
       setIsLoading(false);
       setMainError(error.message);

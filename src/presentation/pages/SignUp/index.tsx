@@ -77,7 +77,7 @@ export function SignUp({ validation, addAccount, saveAccessToken }: Props) {
         passwordConfirmation: fields.passwordConfirmation,
       });
 
-      await saveAccessToken.save(account.access_token);
+      await saveAccessToken.save(account.accessToken);
     } catch (err) {
       setIsLoading(false);
       setMainError(err.message);
