@@ -26,17 +26,9 @@ body {
   color: $black;
 }
 
-input[type="text"],
-input[type="email"], 
-input[type="password"] {
-  border: 1px solid $primaryLight;
-  line-height: 2.5rem;
-  border-radius: 0.25rem;
-  padding: 0 2.5rem 0 0.5rem;
-
-  &:focus {
-    outline-color: $primaryLight;
-  }
+input {
+  border: none;
+  outline: none;
 }
 
 button {
