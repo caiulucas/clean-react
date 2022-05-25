@@ -19,23 +19,26 @@ export function Input(props: Props) {
   }
 
   return (
-    <div className={styles.inputWrap}>
+    <div
+      data-testid={`${props.name}Wrap`}
+      className={styles.inputWrap}
+      data-status={inputErrors[props.name] ? 'invalid' : 'valid'}
+    >
       <input
-        data-testid={props.name}
         {...props}
+        data-testid={props.name}
         placeholder=" "
+        title={inputErrors[props.name]}
         onChange={handleChange}
         ref={inputRef}
       />
-      <label onClick={() => inputRef.current.focus()}>
+      <label
+        data-testid={`${props.name}Label`}
+        title={inputErrors[props.name]}
+        onClick={() => inputRef.current.focus()}
+      >
         {props.placeholder}
       </label>
-      <span
-        data-testid={`${props.name}Status`}
-        title={inputErrors[props.name] || 'Tudo certo!'}
-      >
-        {inputErrors[props.name] ? '🔴' : '🟢'}
-      </span>
     </div>
   );
 }

@@ -94,11 +94,7 @@ describe('Login Page', () => {
     const { sut } = makeSut({ validationError });
 
     Helpers.populateField(sut, 'email');
-
-    const emailStatus = sut.getByTestId('emailStatus');
-
-    expect(emailStatus.title).toBe(validationError);
-    expect(emailStatus.textContent).toBe('🔴');
+    Helpers.testStatusForField(sut, 'email', validationError);
   });
 
   test('Should show password error if validation fails', () => {
@@ -106,11 +102,7 @@ describe('Login Page', () => {
     const { sut } = makeSut({ validationError });
 
     Helpers.populateField(sut, 'password');
-
-    const passwordStatus = sut.getByTestId('passwordStatus');
-
-    expect(passwordStatus.title).toBe(validationError);
-    expect(passwordStatus.textContent).toBe('🔴');
+    Helpers.testStatusForField(sut, 'password', validationError);
   });
 
   test('Should show valid email state if validation succeeds', () => {

@@ -6,9 +6,15 @@ export function testStatusForField(
   elementId: string,
   validationError?: string,
 ) {
-  const status = sut.getByTestId(`${elementId}Status`);
-  expect(status.title).toBe(validationError || 'Tudo certo!');
-  expect(status.textContent).toBe(validationError ? '🔴' : '🟢');
+  const wrap = sut.getByTestId(`${elementId}Wrap`);
+  const field = sut.getByTestId(`${elementId}`);
+  const label = sut.getByTestId(`${elementId}Label`);
+
+  expect(wrap.getAttribute('data-status')).toBe(
+    validationError ? 'invalid' : 'valid',
+  );
+  expect(field.title).toBe(validationError || '');
+  expect(label.title).toBe(validationError || '');
 }
 
 export function testChildCount(
