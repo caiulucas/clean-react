@@ -65,4 +65,21 @@ describe('Login', () => {
 
     cy.url().should('eq', `${baseUrl}/login`);
   });
+
+  it('Should save access token if valid credentials are provided', () => {
+    cy.getByTestId('email').type('mango@gmail.com');
+    cy.getByTestId('password').type('12345');
+
+    cy.get('[type="submit"]').click();
+    cy.getByTestId('formStatus')
+      .getByTestId('spinner')
+      .should('exist')
+      .getByTestId('mainError')
+      .should('not.exist');
+
+    cy.url().should('eq', `${baseUrl}/`);
+    cy.window().then(window =>
+      assert.isOk(window.localStorage.getItem('accessToken')),
+    );
+  });
 });
