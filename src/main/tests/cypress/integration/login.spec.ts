@@ -161,4 +161,22 @@ describe('Login', () => {
       assert.isOk(window.localStorage.getItem('accessToken')),
     );
   });
+
+  it('Should prevent submit if form is invalid', () => {
+    cy.intercept(
+      {
+        method: 'POST',
+        url: /login/,
+      },
+      {
+        statusCode: 200,
+        body: {
+          accessToken: faker.datatype.uuid(),
+        },
+      },
+    ).as('request');
+
+    cy.getByTestId('email').type(faker.internet.email()).type('{enter}');
+    cy.get('@request.all').should('have.length', 0);
+  });
 });
