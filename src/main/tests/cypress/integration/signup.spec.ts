@@ -88,4 +88,13 @@ describe('SignUp', () => {
       assert.isNotOk(window.localStorage.getItem('accessToken')),
     );
   });
+
+  it('Should save access token if valid credentials are provided', () => {
+    Http.mockOk();
+    simulateValidSubmit();
+
+    FormHelpers.testUrl('/');
+
+    FormHelpers.testLocalStorageItem('accessToken');
+  });
 });

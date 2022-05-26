@@ -13,3 +13,7 @@ export function mockUnexpectedError(): void {
 export function mockInvalidData(): void {
   Helpers.mockOk(/signup/, 'POST', { invalidProperty: faker.datatype.uuid() });
 }
+
+export function mockOk(): void {
+  Helpers.mockOk(/signup/, 'POST', { accessToken: faker.datatype.uuid() });
+}
