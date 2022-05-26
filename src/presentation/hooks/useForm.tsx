@@ -4,10 +4,7 @@ export type StateProps = {
   isLoading: boolean;
   isFormInvalid: boolean;
   mainError: string;
-  inputErrors: {
-    email: string;
-    password: string;
-  };
+  inputErrors: object;
   changeFields(fields: object): void;
   onSubmit(): Promise<void>;
 };
