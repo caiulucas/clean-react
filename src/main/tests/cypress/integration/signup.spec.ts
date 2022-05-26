@@ -65,4 +65,14 @@ describe('SignUp', () => {
     FormHelpers.testMainError('Esse e-mail já está em uso');
     FormHelpers.testUrl('/signup');
   });
+
+  it('Should present unexpected error on 400', () => {
+    Http.mockUnexpectedError();
+    simulateValidSubmit();
+
+    FormHelpers.testMainError(
+      'Ops! Algo que não deveria acontecer, aconteceu. Tente de novo mais tarde',
+    );
+    FormHelpers.testUrl('/signup');
+  });
 });

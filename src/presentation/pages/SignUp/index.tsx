@@ -81,7 +81,6 @@ export function SignUp({ validation, addAccount, saveAccessToken }: Props) {
     } catch (err) {
       setIsLoading(false);
       setMainError(err.message);
-
       throw err;
     }
   }, [addAccount, saveAccessToken, fields, isLoading, isFormInvalid]);
