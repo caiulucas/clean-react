@@ -16,7 +16,7 @@ describe('SignUp', () => {
   });
 
   it('Should present error state if form is invalid', () => {
-    cy.getByTestId('name').type(faker.random.word());
+    cy.getByTestId('name').type(faker.name.findName());
     cy.getByTestId('email').type(faker.random.word());
     cy.getByTestId('password').type(faker.random.alphaNumeric(4));
     cy.getByTestId('passwordConfirmation').type(faker.internet.password());
@@ -26,6 +26,23 @@ describe('SignUp', () => {
     FormHelpers.testInputStatus('passwordConfirmation', 'Valor inválido');
 
     cy.get('[type="submit"]').should('have.attr', 'disabled');
+    cy.getByTestId('formStatus').should('not.have.descendants');
+  });
+
+  it('Should present valid state if form is valid', () => {
+    const password = faker.internet.password();
+
+    cy.getByTestId('name').type(faker.name.findName());
+    cy.getByTestId('email').type(faker.internet.email());
+    cy.getByTestId('password').type(password);
+    cy.getByTestId('passwordConfirmation').type(password);
+
+    FormHelpers.testInputStatus('name');
+    FormHelpers.testInputStatus('email');
+    FormHelpers.testInputStatus('password');
+    FormHelpers.testInputStatus('passwordConfirmation');
+
+    cy.get('[type="submit"]').should('not.have.attr', 'disabled');
     cy.getByTestId('formStatus').should('not.have.descendants');
   });
 });
