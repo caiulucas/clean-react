@@ -10,6 +10,10 @@ export function mockUnexpectedError(): void {
   Helpers.mockUnexpectedError(/login/, 'POST');
 }
 
+export function mockEmailInUseError(): void {
+  Helpers.mockEmailInUseError(/login/, 'POST');
+}
+
 export function mockOk(): void {
   Helpers.mockOk(/login/, 'POST', { accessToken: faker.datatype.uuid() });
 }

@@ -30,6 +30,21 @@ export function mockUnexpectedError(url: RegExp, method: string): void {
   ).as('request');
 }
 
+export function mockEmailInUseError(url: RegExp, method: string): void {
+  cy.intercept(
+    {
+      method,
+      url,
+    },
+    {
+      statusCode: 403,
+      body: {
+        error: faker.random.words(),
+      },
+    },
+  ).as('request');
+}
+
 export function mockOk(url: RegExp, method: string, response: object): void {
   cy.intercept(
     {
