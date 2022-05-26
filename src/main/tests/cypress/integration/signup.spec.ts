@@ -97,4 +97,11 @@ describe('SignUp', () => {
 
     FormHelpers.testLocalStorageItem('accessToken');
   });
+
+  it('Should prevent submit if form is invalid', () => {
+    Http.mockOk();
+
+    cy.getByTestId('email').type(faker.internet.email()).type('{enter}');
+    cy.get('@request.all').should('have.length', 0);
+  });
 });
