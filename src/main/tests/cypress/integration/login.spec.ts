@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 
 import * as FormHelpers from '../support/form-helpers';
 import * as Http from './login-mocks';

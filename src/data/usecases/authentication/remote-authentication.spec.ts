@@ -4,7 +4,7 @@ import { InvalidCredentialsError, UnexpectedError } from '@domain/errors';
 import { AccountModel } from '@domain/models';
 import { mockAuthentication, mockAccountModel } from '@domain/tests';
 import { AuthenticationParams } from '@domain/usecases';
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 
 import { RemoteAuthentication } from './remote-authentication';
 

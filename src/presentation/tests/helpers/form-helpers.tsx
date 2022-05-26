@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 import { fireEvent, RenderResult } from '@testing-library/react';
 
 export function testStatusForField(

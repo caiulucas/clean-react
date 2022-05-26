@@ -1,6 +1,6 @@
 import { SetStorageMock } from '@data/tests';
 import { UnexpectedError } from '@domain/errors';
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 
 import { LocalSaveAccessToken } from './local-save-access-token';
 

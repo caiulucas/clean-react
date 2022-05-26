@@ -1,6 +1,6 @@
 import axios, { AxiosStatic } from 'axios';
 
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 
 export function mockHttpResponse() {
   return {

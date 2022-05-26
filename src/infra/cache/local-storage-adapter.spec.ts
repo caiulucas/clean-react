@@ -1,6 +1,6 @@
 import 'jest-localstorage-mock';
 
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 
 import { LocalStorageAdapter } from './local-storage-adapter';
 

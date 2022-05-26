@@ -5,7 +5,7 @@ import { EmailInUseError } from '@domain/errors/email-in-use-error';
 import { AccountModel } from '@domain/models';
 import { mockAccountModel, mockAddAccountParams } from '@domain/tests';
 import { AddAccountParams } from '@domain/usecases';
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 
 import { RemoteAddAccount } from './remote-add-account';
 

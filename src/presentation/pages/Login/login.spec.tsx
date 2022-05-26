@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
 import { InvalidCredentialsError } from '@domain/errors';
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 import { Login } from '@presentation/pages';
 import {
   ValidationSpy,

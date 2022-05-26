@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
 import { EmailInUseError } from '@domain/errors';
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 import {
   ValidationSpy,
   AddAccountSpy,

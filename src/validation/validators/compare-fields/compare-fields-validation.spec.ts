@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 import { InvalidFieldError } from '@validation/errors';
 
 import { CompareFieldsValidation } from './compare-fields-validation';

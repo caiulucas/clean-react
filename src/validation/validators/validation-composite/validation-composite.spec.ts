@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 import { FieldValidationSpy } from '@validation/tests';
 
 import { ValidationComposite } from './validation-composite';

@@ -4,7 +4,7 @@ import {
   HttpResponse,
   HttpStatusCode,
 } from '@data/protocols/http';
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 
 export function mockPostRequest(): HttpPostParams<any> {
   return {
