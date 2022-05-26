@@ -99,7 +99,7 @@ export function SignUp({ validation, addAccount, saveAccessToken }: Props) {
         }}
       >
         <Form>
-          <h2>Login</h2>
+          <h2>Cadastro</h2>
           <Input type="text" name="name" placeholder="Digite seu nome" />
           <Input type="email" name="email" placeholder="Digite seu email" />
           <Input
