@@ -1,7 +1,7 @@
 import faker from '@faker-js/faker';
 
 import * as FormHelpers from '../support/form-helpers';
-import * as Http from './login-mocks';
+import * as Http from '../support/login-mocks';
 
 function simulateValidSubmit(): void {
   cy.getByTestId('email').type(faker.internet.email());
