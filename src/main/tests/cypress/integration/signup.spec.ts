@@ -75,4 +75,17 @@ describe('SignUp', () => {
     );
     FormHelpers.testUrl('/signup');
   });
+
+  it('Should present unexpected error if invalid data is returned', () => {
+    Http.mockInvalidData();
+    simulateValidSubmit();
+
+    FormHelpers.testMainError(
+      'Ops! Algo que não deveria acontecer, aconteceu. Tente de novo mais tarde',
+    );
+
+    cy.window().then(window =>
+      assert.isNotOk(window.localStorage.getItem('accessToken')),
+    );
+  });
 });
