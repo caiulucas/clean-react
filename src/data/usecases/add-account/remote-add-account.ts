@@ -18,6 +18,8 @@ export class RemoteAddAccount implements AddAccount {
       body: params,
     });
 
+    console.log(httpResponse.statusCode);
+
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
         return httpResponse.body;
