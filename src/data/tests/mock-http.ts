@@ -6,19 +6,19 @@ import {
 } from '@data/protocols/http';
 import faker from '@faker-js/faker';
 
-export function mockPostRequest(): HttpPostParams<any> {
+export function mockPostRequest(): HttpPostParams {
   return {
     url: faker.internet.url(),
     body: faker.helpers.objectValue({ key: 'value' }),
   };
 }
 
-export class HttpPostClientSpy<T, R> implements HttpPostClient<T, R> {
+export class HttpPostClientSpy<R> implements HttpPostClient<R> {
   url?: string;
-  body?: T;
+  body?: any;
   response: HttpResponse<R> = { statusCode: HttpStatusCode.ok };
 
-  async post({ url, body }: HttpPostParams<T>): Promise<HttpResponse<R>> {
+  async post({ url, body }: HttpPostParams): Promise<HttpResponse<R>> {
     this.url = url;
     this.body = body;
 
