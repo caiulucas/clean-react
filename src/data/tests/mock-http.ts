@@ -1,6 +1,8 @@
 import {
-  HttpPostParams,
+  HttpGetClient,
+  HttpGetParams,
   HttpPostClient,
+  HttpPostParams,
   HttpResponse,
   HttpStatusCode,
 } from '@data/protocols/http';
@@ -11,6 +13,14 @@ export function mockPostRequest(): HttpPostParams {
     url: faker.internet.url(),
     body: faker.helpers.objectValue({ key: 'value' }),
   };
+}
+
+export class HttpGetClientSpy implements HttpGetClient {
+  url: string;
+
+  async get(params: HttpGetParams): Promise<void> {
+    this.url = params.url;
+  }
 }
 
 export class HttpPostClientSpy<R> implements HttpPostClient<R> {
