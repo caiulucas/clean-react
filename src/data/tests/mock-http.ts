@@ -17,10 +17,13 @@ export function mockPostRequest(): HttpPostParams {
 
 export class HttpGetClientSpy<R> implements HttpGetClient<R> {
   url: string;
+  body?: any;
   response: HttpResponse<R> = { statusCode: HttpStatusCode.ok };
 
-  async get(params: HttpGetParams): Promise<HttpResponse<R>> {
-    this.url = params.url;
+  async get({ url, body }: HttpGetParams): Promise<HttpResponse<R>> {
+    this.url = url;
+    this.body = body;
+
     return this.response;
   }
 }

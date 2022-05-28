@@ -2,6 +2,7 @@ import { HttpStatusCode } from '@data/protocols/http';
 import { HttpGetClientSpy } from '@data/tests';
 import { UnexpectedError } from '@domain/errors';
 import { SurveyModel } from '@domain/models';
+import { mockSurveyListModel } from '@domain/tests';
 import faker from '@faker-js/faker';
 
 import { RemoteLoadSurveyList } from './remote-load-survey-list';
@@ -58,5 +59,19 @@ describe('RemoteLoadSurveyList', () => {
 
     const promise = sut.loadAll();
     await expect(promise).rejects.toThrowError(new UnexpectedError());
+  });
+
+  test('Should return a list of SurveyModels if HttpPostClient returns 200', async () => {
+    const { sut, httpGetClientSpy } = makeSut();
+    const httpResult = mockSurveyListModel();
+
+    httpGetClientSpy.response = {
+      statusCode: HttpStatusCode.ok,
+      body: httpResult,
+    };
+
+    const surveyList = await sut.loadAll();
+
+    expect(surveyList).toEqual(httpResult);
   });
 });
