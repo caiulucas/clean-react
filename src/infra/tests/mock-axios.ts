@@ -12,8 +12,8 @@ export function mockHttpResponse() {
 export function mockAxios() {
   const mockedAxios = axios as jest.Mocked<AxiosStatic>;
 
-  mockedAxios.get.mockResolvedValue(mockHttpResponse());
-  mockedAxios.post.mockResolvedValue(mockHttpResponse());
+  mockedAxios.post.mockClear().mockResolvedValue(mockHttpResponse());
+  mockedAxios.get.mockClear().mockResolvedValue(mockHttpResponse());
 
   return mockedAxios;
 }
