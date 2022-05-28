@@ -9,6 +9,13 @@ import {
 } from '@data/protocols/http';
 
 export class AxiosHttpClient implements HttpPostClient, HttpGetClient {
+  private adapter(axiosResponse: AxiosResponse): HttpResponse {
+    return {
+      statusCode: axiosResponse.status,
+      body: axiosResponse.data,
+    };
+  }
+
   async post(params: HttpPostParams): Promise<HttpResponse> {
     let axiosResponse: AxiosResponse;
     try {
@@ -17,10 +24,7 @@ export class AxiosHttpClient implements HttpPostClient, HttpGetClient {
       axiosResponse = err.response;
     }
 
-    return {
-      statusCode: axiosResponse.status,
-      body: axiosResponse.data,
-    };
+    return this.adapter(axiosResponse);
   }
 
   async get(params: HttpGetParams): Promise<HttpResponse> {
@@ -32,9 +36,6 @@ export class AxiosHttpClient implements HttpPostClient, HttpGetClient {
       axiosResponse = err.response;
     }
 
-    return {
-      statusCode: axiosResponse.status,
-      body: axiosResponse.data,
-    };
+    return this.adapter(axiosResponse);
   }
 }
