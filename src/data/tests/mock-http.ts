@@ -8,6 +8,12 @@ import {
 } from '@data/protocols/http';
 import faker from '@faker-js/faker';
 
+export function mockGetRequest(): HttpGetParams {
+  return {
+    url: faker.internet.url(),
+  };
+}
+
 export function mockPostRequest(): HttpPostParams {
   return {
     url: faker.internet.url(),
