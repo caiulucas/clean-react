@@ -1,22 +1,13 @@
 import React from 'react';
 
-import { Footer, Logo } from '@presentation/components';
+import { Footer, Header } from '@presentation/components';
 
 import styles from './styles.scss';
 
 export function SurveyList() {
   return (
     <div className={styles.surveyListWrap}>
-      <header>
-        <div className={styles.headerContent}>
-          <Logo />
-
-          <div>
-            <span>Caio Lucas</span>
-            <a href="#">Sair</a>
-          </div>
-        </div>
-      </header>
+      <Header />
       <main>
         <h2>Enquetes</h2>
         <ul>

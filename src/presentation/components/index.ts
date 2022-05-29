@@ -2,6 +2,7 @@ export { SubmitButton } from './SubmitButton';
 export { Footer } from './Footer';
 export { FormStatus } from './FormStatus';
 export { Input } from './Input';
+export { Header } from './Header';
 export { LoginHeader } from './LoginHeader';
 export { Logo } from './Logo';
 export { Spinner } from './Spinner';

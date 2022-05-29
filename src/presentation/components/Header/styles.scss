@@ -1,0 +1,47 @@
+@import '../../styles/colors.scss';
+
+.headerWrap {
+  display: flex;
+  background-color: $primary;
+  border-top: 2.5rem solid $primaryDark;
+  justify-content: center;
+
+  .headerContent {
+    display: flex;
+    justify-content: space-between;
+
+    max-width: 50rem;
+    flex-grow: 1;
+
+    padding: 1.5rem 2.5rem;
+     
+    img {
+      width: 4rem;
+      align-self: center;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      align-self: center;
+
+      color: $white;
+
+      span {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      a {
+        color: $white;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
