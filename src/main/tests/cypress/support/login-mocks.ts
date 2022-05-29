@@ -15,7 +15,10 @@ export function mockEmailInUseError(): void {
 }
 
 export function mockOk(): void {
-  Helpers.mockOk(/login/, 'POST', { accessToken: faker.datatype.uuid() });
+  Helpers.mockOk(/login/, 'POST', {
+    name: faker.name.findName(),
+    accessToken: faker.datatype.uuid(),
+  });
 }
 
 export function mockInvalidData(): void {

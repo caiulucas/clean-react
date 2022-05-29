@@ -8,5 +8,5 @@ export function mockAuthentication(): AuthenticationParams {
 }
 
 export function mockAccountModel(): AccountModel {
-  return { accessToken: faker.datatype.uuid() };
+  return { name: faker.name.findName(), accessToken: faker.datatype.uuid() };
 }

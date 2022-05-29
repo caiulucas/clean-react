@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Authentication } from '@domain/usecases';
-import { SaveAccessToken } from '@domain/usecases/save-access-token';
+import { Authentication, UpdateCurrentAccount } from '@domain/usecases';
 import {
   Footer,
   FormStatus,
@@ -19,10 +18,14 @@ import styles from './styles.scss';
 type Props = {
   validation: Validation;
   authentication: Authentication;
-  saveAccessToken: SaveAccessToken;
+  updateCurrentAccount: UpdateCurrentAccount;
 };
 
-export function Login({ validation, authentication, saveAccessToken }: Props) {
+export function Login({
+  validation,
+  authentication,
+  updateCurrentAccount,
+}: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [isFormInvalid, setIsFormInvalid] = useState(false);
   const [fields, setFields] = useState({
@@ -57,13 +60,13 @@ export function Login({ validation, authentication, saveAccessToken }: Props) {
         password: fields.password,
       });
 
-      await saveAccessToken.save(account.accessToken);
+      await updateCurrentAccount.save(account);
     } catch (error) {
       setIsLoading(false);
       setMainError(error.message);
       throw error;
     }
-  }, [isLoading, isFormInvalid, authentication, fields, saveAccessToken]);
+  }, [isLoading, isFormInvalid, authentication, fields, updateCurrentAccount]);
 
   return (
     <div className={styles.loginWrap}>

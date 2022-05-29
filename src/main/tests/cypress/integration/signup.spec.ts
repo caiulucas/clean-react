@@ -85,17 +85,17 @@ describe('SignUp', () => {
     );
 
     cy.window().then(window =>
-      assert.isNotOk(window.localStorage.getItem('accessToken')),
+      assert.isNotOk(window.localStorage.getItem('account')),
     );
   });
 
-  it('Should save access token if valid credentials are provided', () => {
+  it('Should save account if valid credentials are provided', () => {
     Http.mockOk();
     simulateValidSubmit();
 
     FormHelpers.testUrl('/');
 
-    FormHelpers.testLocalStorageItem('accessToken');
+    FormHelpers.testLocalStorageItem('account');
   });
 
   it('Should prevent submit if form is invalid', () => {

@@ -6,7 +6,7 @@ import faker from '@faker-js/faker';
 import {
   ValidationSpy,
   AddAccountSpy,
-  SaveAccessTokenMock,
+  UpdateCurrentAccountMock,
 } from '@presentation/tests';
 import { Helpers } from '@presentation/tests/helpers';
 import {
@@ -23,7 +23,7 @@ import { SignUp } from '.';
 type SutTypes = {
   sut: RenderResult;
   addAccountSpy: AddAccountSpy;
-  saveAccessTokenMock: SaveAccessTokenMock;
+  updateCurrentAccountMock: UpdateCurrentAccountMock;
 };
 
 type SutParams = {
@@ -35,7 +35,7 @@ const history = createMemoryHistory({ initialEntries: ['/signup'] });
 function makeSut(params?: SutParams): SutTypes {
   const validationSpy = new ValidationSpy();
   const addAccountSpy = new AddAccountSpy();
-  const saveAccessTokenMock = new SaveAccessTokenMock();
+  const updateCurrentAccountMock = new UpdateCurrentAccountMock();
 
   validationSpy.errorMessage = params?.validationError;
 
@@ -44,12 +44,12 @@ function makeSut(params?: SutParams): SutTypes {
       <SignUp
         validation={validationSpy}
         addAccount={addAccountSpy}
-        saveAccessToken={saveAccessTokenMock}
+        updateCurrentAccount={updateCurrentAccountMock}
       />
     </Router>,
   );
 
-  return { sut, addAccountSpy, saveAccessTokenMock };
+  return { sut, addAccountSpy, updateCurrentAccountMock };
 }
 
 function simulateValidSubmit(
@@ -217,25 +217,23 @@ describe('SignUp Page', () => {
     Helpers.testElementText(sut, 'mainError', error.message);
   });
 
-  test('Should call SaveAccessToken on success', async () => {
-    const { sut, addAccountSpy, saveAccessTokenMock } = makeSut();
+  test('Should call UpdateCurrentAccount on success', async () => {
+    const { sut, addAccountSpy, updateCurrentAccountMock } = makeSut();
 
     simulateValidSubmit(sut);
     await waitFor(() => sut.getByTestId('form'));
 
-    expect(saveAccessTokenMock.accessToken).toBe(
-      addAccountSpy.account.accessToken,
-    );
+    expect(updateCurrentAccountMock.account).toEqual(addAccountSpy.account);
 
     expect(mockedUsedNavigate).toHaveBeenCalledWith('/', { replace: true });
   });
 
-  test('Should present error if SaveAccessToken fails', async () => {
-    const { sut, saveAccessTokenMock } = makeSut();
+  test('Should present error if UpdateCurrentAccount fails', async () => {
+    const { sut, updateCurrentAccountMock } = makeSut();
     const error = new EmailInUseError();
 
     await act(async () => {
-      jest.spyOn(saveAccessTokenMock, 'save').mockRejectedValueOnce(error);
+      jest.spyOn(updateCurrentAccountMock, 'save').mockRejectedValueOnce(error);
       simulateValidSubmit(sut);
       await waitFor(() => sut.getByTestId('form'));
     });
