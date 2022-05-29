@@ -86,7 +86,7 @@ export function SignUp({ validation, addAccount, saveAccessToken }: Props) {
   }, [addAccount, saveAccessToken, fields, isLoading, isFormInvalid]);
 
   return (
-    <div className={styles.login}>
+    <div className={styles.signupWrap}>
       <LoginHeader />
 
       <FormProvider

@@ -66,7 +66,7 @@ export function Login({ validation, authentication, saveAccessToken }: Props) {
   }, [isLoading, isFormInvalid, authentication, fields, saveAccessToken]);
 
   return (
-    <div className={styles.login}>
+    <div className={styles.loginWrap}>
       <LoginHeader />
 
       <FormProvider
