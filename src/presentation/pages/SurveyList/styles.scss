@@ -97,7 +97,8 @@
         box-shadow: 0 1px 3px -1px $black;
       }
 
-      div {
+      .surveyContent {
+        position: relative;
         display: flex;
         border-radius: 0.5rem 0.5rem 0 0;
         justify-content: space-between;
@@ -109,6 +110,27 @@
           linear-gradient(to right, $white, $white);
         background-position: 0 0, 50 0;
         background-size: 3.5rem 100%, 100% 100%;
+
+        .iconWrap {
+          display: flex;
+          position: absolute;
+          
+          top: -0.75rem;
+          right: -0.75rem;
+          padding: 0.5rem;
+          border-radius: 50%;
+          
+          background-color: $invalid;
+          box-shadow: 0 1px 3px -1px $black;
+
+          &.invalid {
+            background-color: $invalid;
+          }
+
+          &.valid {
+            background-color:$valid;
+          }
+        }
 
         time {
           display: flex;
