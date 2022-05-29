@@ -5,5 +5,6 @@ export { Input } from './Input';
 export { Header } from './Header';
 export { LoginHeader } from './LoginHeader';
 export { Logo } from './Logo';
+export { Icon } from './Icon';
 export { Spinner } from './Spinner';
 export { Form } from './Form';
