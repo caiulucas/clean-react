@@ -5,7 +5,7 @@ import styles from './styles.scss';
 
 function LoginHeaderBase() {
   return (
-    <header className={styles.loginHeader}>
+    <header className={styles.loginHeaderWrap}>
       <Logo />
       <h1>Caiulucas - Enquete para programadores</h1>
     </header>

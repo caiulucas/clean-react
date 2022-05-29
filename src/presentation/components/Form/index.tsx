@@ -21,7 +21,11 @@ export function Form({ children }: Props) {
   }
 
   return (
-    <form data-testid="form" className={styles.form} onSubmit={handleSubmit}>
+    <form
+      data-testid="form"
+      className={styles.formWrap}
+      onSubmit={handleSubmit}
+    >
       {children}
     </form>
   );
