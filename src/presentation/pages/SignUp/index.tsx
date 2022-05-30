@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { AddAccount, UpdateCurrentAccount } from '@domain/usecases';
+import { AddAccount } from '@domain/usecases';
 import {
   Footer,
   Form,
@@ -10,6 +10,7 @@ import {
   LoginHeader,
   SubmitButton,
 } from '@presentation/components';
+import { useApi } from '@presentation/hooks/useApi';
 import { FormProvider } from '@presentation/hooks/useForm';
 import { Validation } from '@presentation/protocols/validation';
 
@@ -18,14 +19,11 @@ import styles from './styles.scss';
 type Props = {
   validation: Validation;
   addAccount: AddAccount;
-  updateCurrentAccount: UpdateCurrentAccount;
 };
 
-export function SignUp({
-  validation,
-  addAccount,
-  updateCurrentAccount,
-}: Props) {
+export function SignUp({ validation, addAccount }: Props) {
+  const { setCurrentAccount } = useApi();
+
   const [isLoading, setIsLoading] = useState(false);
   const [isFormInvalid, setIsFormInvalid] = useState(false);
   const [mainError, setMainError] = useState('');
@@ -81,13 +79,13 @@ export function SignUp({
         passwordConfirmation: fields.passwordConfirmation,
       });
 
-      await updateCurrentAccount.save(account);
+      setCurrentAccount(account);
     } catch (err) {
       setIsLoading(false);
       setMainError(err.message);
       throw err;
     }
-  }, [addAccount, updateCurrentAccount, fields, isLoading, isFormInvalid]);
+  }, [isLoading, isFormInvalid, addAccount, fields, setCurrentAccount]);
 
   return (
     <div className={styles.signupWrap}>
