@@ -1,15 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Authentication, UpdateCurrentAccount } from '@domain/usecases';
+import { Authentication } from '@domain/usecases';
 import {
   Footer,
+  Form,
   FormStatus,
   Input,
   LoginHeader,
   SubmitButton,
-  Form,
 } from '@presentation/components';
+import { useApi } from '@presentation/hooks/useApi';
 import { FormProvider } from '@presentation/hooks/useForm';
 import { Validation } from '@presentation/protocols/validation';
 
@@ -18,14 +19,11 @@ import styles from './styles.scss';
 type Props = {
   validation: Validation;
   authentication: Authentication;
-  updateCurrentAccount: UpdateCurrentAccount;
 };
 
-export function Login({
-  validation,
-  authentication,
-  updateCurrentAccount,
-}: Props) {
+export function Login({ validation, authentication }: Props) {
+  const { setCurrentAccount } = useApi();
+
   const [isLoading, setIsLoading] = useState(false);
   const [isFormInvalid, setIsFormInvalid] = useState(false);
   const [fields, setFields] = useState({
@@ -60,13 +58,13 @@ export function Login({
         password: fields.password,
       });
 
-      await updateCurrentAccount.save(account);
+      setCurrentAccount(account);
     } catch (error) {
       setIsLoading(false);
       setMainError(error.message);
       throw error;
     }
-  }, [isLoading, isFormInvalid, authentication, fields, updateCurrentAccount]);
+  }, [isLoading, isFormInvalid, authentication, fields, setCurrentAccount]);
 
   return (
     <div className={styles.loginWrap}>
