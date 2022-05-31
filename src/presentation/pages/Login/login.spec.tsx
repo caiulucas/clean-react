@@ -70,10 +70,8 @@ describe('Login Page', () => {
     const validationError = faker.random.words();
     makeSut({ validationError });
 
-    Helpers.testChildCount('formStatus', 0);
-
-    const submitButton = screen.getByText('Entrar') as HTMLButtonElement;
-    expect(submitButton.disabled).toBeTruthy();
+    expect(screen.getByTestId('formStatus').children).toHaveLength(0);
+    expect(screen.getByText('Entrar')).toBeDisabled();
 
     Helpers.testStatusForField('email', validationError);
     Helpers.testStatusForField('password', validationError);
@@ -124,9 +122,7 @@ describe('Login Page', () => {
   test('Should show spinner on submit', () => {
     makeSut();
     simulateValidSubmit();
-
-    const spinner = screen.getByTestId('spinner');
-    expect(spinner).toBeTruthy();
+    expect(screen.queryByTestId('spinner')).toBeInTheDocument();
   });
 
   test('Should call authentication with correct values', () => {
@@ -166,8 +162,8 @@ describe('Login Page', () => {
       await waitFor(() => simulateValidSubmit());
     });
 
-    Helpers.testChildCount('formStatus', 1);
-    Helpers.testElementText('mainError', error.message);
+    expect(screen.getByTestId('formStatus').children).toHaveLength(1);
+    expect(screen.getByTestId('mainError')).toHaveTextContent(error.message);
   });
 
   test('Should call UpdateCurrentAccount on success', async () => {

@@ -9,16 +9,16 @@ export function testStatusForField(
   const field = screen.getByTestId(`${elementId}`);
   const label = screen.getByTestId(`${elementId}Label`);
 
-  expect(wrap.getAttribute('data-status')).toBe(
+  expect(wrap).toHaveAttribute(
+    'data-status',
     validationError ? 'invalid' : 'valid',
   );
-  expect(field.title).toBe(validationError || '');
-  expect(label.title).toBe(validationError || '');
+  expect(field).toHaveProperty('title', validationError || '');
+  expect(label).toHaveProperty('title', validationError || '');
 }
 
 export function testChildCount(elementId: string, count: number) {
-  const element = screen.getByTestId(elementId);
-  expect(element.childElementCount).toBe(count);
+  expect(screen.getByTestId(elementId).children).toHaveLength(count);
 }
 
 export function populateField(elementId: string, value = faker.random.word()) {
@@ -26,9 +26,4 @@ export function populateField(elementId: string, value = faker.random.word()) {
   fireEvent.input(input, {
     target: { value },
   });
-}
-
-export function testElementText(elementId: string, text: string) {
-  const element = screen.getByTestId(elementId);
-  expect(element.textContent).toBe(text);
 }

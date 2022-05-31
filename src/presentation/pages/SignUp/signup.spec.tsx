@@ -73,10 +73,9 @@ describe('SignUp Page', () => {
     const validationError = faker.random.words();
     makeSut({ validationError });
 
-    Helpers.testChildCount('formStatus', 0);
+    expect(screen.getByTestId('formStatus').children).toHaveLength(0);
 
-    const submitButton = screen.getByText('Cadastrar') as HTMLButtonElement;
-    expect(submitButton.disabled).toBeTruthy();
+    expect(screen.getByText('Cadastrar')).toBeDisabled();
 
     Helpers.testStatusForField('name', validationError);
     Helpers.testStatusForField('email', validationError);
@@ -155,9 +154,7 @@ describe('SignUp Page', () => {
   test('Should show spinner on submit', () => {
     makeSut();
     simulateValidSubmit();
-
-    const spinner = screen.getByTestId('spinner');
-    expect(spinner).toBeTruthy();
+    expect(screen.queryByTestId('spinner')).toBeInTheDocument();
   });
 
   test('Should add account with correct values', () => {
@@ -204,8 +201,7 @@ describe('SignUp Page', () => {
       await waitFor(() => simulateValidSubmit());
     });
 
-    Helpers.testChildCount('formStatus', 1);
-    Helpers.testElementText('mainError', error.message);
+    expect(screen.getByTestId('formStatus').children).toHaveLength(1);
   });
 
   test('Should call UpdateCurrentAccount on success', async () => {
