@@ -1,6 +1,7 @@
 import { createMemoryHistory, MemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
+import { mockAccountModel } from '@domain/tests';
 import { getCurrentAccountAdapter } from '@main/adapters/current-account-adapter';
 import { MakeLogin } from '@main/factories/pages/login/login-factory';
 import { ApiProvider } from '@presentation/hooks/useApi';
@@ -12,11 +13,11 @@ type SutTypes = {
   history: MemoryHistory;
 };
 
-function makeSut(): SutTypes {
+function makeSut(account = mockAccountModel()): SutTypes {
   const history = createMemoryHistory({ initialEntries: ['/'] });
 
   render(
-    <ApiProvider value={{ getCurrentAccount: getCurrentAccountAdapter }}>
+    <ApiProvider value={{ getCurrentAccount: () => account }}>
       <Router location={history.location} navigator={history}>
         <PrivateRoute>
           <MakeLogin />
@@ -30,7 +31,12 @@ function makeSut(): SutTypes {
 
 describe('PrivateRoute', () => {
   test('Should redirect to /login if token is empty', () => {
-    const { history } = makeSut();
+    const { history } = makeSut(null);
     expect(history.location.pathname).toBe('/login');
+  });
+
+  test('Should render current component if token is not empty', () => {
+    const { history } = makeSut();
+    expect(history.location.pathname).toBe('/');
   });
 });
