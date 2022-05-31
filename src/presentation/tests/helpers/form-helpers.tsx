@@ -1,14 +1,13 @@
 import faker from '@faker-js/faker';
-import { fireEvent, RenderResult } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 export function testStatusForField(
-  sut: RenderResult,
   elementId: string,
   validationError?: string,
 ) {
-  const wrap = sut.getByTestId(`${elementId}Wrap`);
-  const field = sut.getByTestId(`${elementId}`);
-  const label = sut.getByTestId(`${elementId}Label`);
+  const wrap = screen.getByTestId(`${elementId}Wrap`);
+  const field = screen.getByTestId(`${elementId}`);
+  const label = screen.getByTestId(`${elementId}Label`);
 
   expect(wrap.getAttribute('data-status')).toBe(
     validationError ? 'invalid' : 'valid',
@@ -17,31 +16,19 @@ export function testStatusForField(
   expect(label.title).toBe(validationError || '');
 }
 
-export function testChildCount(
-  sut: RenderResult,
-  elementId: string,
-  count: number,
-) {
-  const element = sut.getByTestId(elementId);
+export function testChildCount(elementId: string, count: number) {
+  const element = screen.getByTestId(elementId);
   expect(element.childElementCount).toBe(count);
 }
 
-export function populateField(
-  sut: RenderResult,
-  elementId: string,
-  value = faker.random.word(),
-) {
-  const input = sut.getByTestId(elementId);
+export function populateField(elementId: string, value = faker.random.word()) {
+  const input = screen.getByTestId(elementId);
   fireEvent.input(input, {
     target: { value },
   });
 }
 
-export function testElementText(
-  sut: RenderResult,
-  elementId: string,
-  text: string,
-) {
-  const element = sut.getByTestId(elementId);
+export function testElementText(elementId: string, text: string) {
+  const element = screen.getByTestId(elementId);
   expect(element.textContent).toBe(text);
 }

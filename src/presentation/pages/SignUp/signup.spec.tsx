@@ -9,17 +9,15 @@ import { AddAccountSpy, ValidationSpy } from '@presentation/tests';
 import { Helpers } from '@presentation/tests/helpers';
 import {
   act,
-  cleanup,
   fireEvent,
   render,
-  RenderResult,
+  screen,
   waitFor,
 } from '@testing-library/react';
 
 import { SignUp } from '.';
 
 type SutTypes = {
-  sut: RenderResult;
   addAccountSpy: AddAccountSpy;
   setCurrentAccountMock(account: AccountModel): void;
 };
@@ -37,7 +35,7 @@ function makeSut(params?: SutParams): SutTypes {
 
   validationSpy.errorMessage = params?.validationError;
 
-  const sut = render(
+  render(
     <ApiProvider value={{ setCurrentAccount: setCurrentAccountMock }}>
       <Router location={history.location} navigator={history}>
         <SignUp validation={validationSpy} addAccount={addAccountSpy} />
@@ -45,23 +43,22 @@ function makeSut(params?: SutParams): SutTypes {
     </ApiProvider>,
   );
 
-  return { sut, addAccountSpy, setCurrentAccountMock };
+  return { addAccountSpy, setCurrentAccountMock };
 }
 
 function simulateValidSubmit(
-  sut: RenderResult,
   fields = {
     name: faker.name.findName(),
     email: faker.internet.email(),
     password: faker.internet.password(),
   },
 ) {
-  Helpers.populateField(sut, 'name', fields.name);
-  Helpers.populateField(sut, 'email', fields.email);
-  Helpers.populateField(sut, 'password', fields.password);
-  Helpers.populateField(sut, 'passwordConfirmation', fields.password);
+  Helpers.populateField('name', fields.name);
+  Helpers.populateField('email', fields.email);
+  Helpers.populateField('password', fields.password);
+  Helpers.populateField('passwordConfirmation', fields.password);
 
-  const submitButton = sut.getByText('Cadastrar');
+  const submitButton = screen.getByText('Cadastrar');
   fireEvent.click(submitButton);
 }
 
@@ -72,106 +69,104 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('SignUp Page', () => {
-  afterEach(() => cleanup);
-
   test('Should start with initial state', () => {
     const validationError = faker.random.words();
-    const { sut } = makeSut({ validationError });
+    makeSut({ validationError });
 
-    Helpers.testChildCount(sut, 'formStatus', 0);
+    Helpers.testChildCount('formStatus', 0);
 
-    const submitButton = sut.getByText('Cadastrar') as HTMLButtonElement;
+    const submitButton = screen.getByText('Cadastrar') as HTMLButtonElement;
     expect(submitButton.disabled).toBeTruthy();
 
-    Helpers.testStatusForField(sut, 'name', validationError);
-    Helpers.testStatusForField(sut, 'email', validationError);
-    Helpers.testStatusForField(sut, 'password', validationError);
-    Helpers.testStatusForField(sut, 'passwordConfirmation', validationError);
+    Helpers.testStatusForField('name', validationError);
+    Helpers.testStatusForField('email', validationError);
+    Helpers.testStatusForField('password', validationError);
+    Helpers.testStatusForField('passwordConfirmation', validationError);
   });
 
   test('Should show name error if Validation fails', () => {
     const validationError = faker.random.words();
-    const { sut } = makeSut({ validationError });
+    makeSut({ validationError });
 
-    Helpers.populateField(sut, 'name');
-    Helpers.testStatusForField(sut, 'name', validationError);
+    Helpers.populateField('name');
+    Helpers.testStatusForField('name', validationError);
   });
 
   test('Should show email error if Validation fails', () => {
     const validationError = faker.random.words();
-    const { sut } = makeSut({ validationError });
+    makeSut({ validationError });
 
-    Helpers.populateField(sut, 'email');
-    Helpers.testStatusForField(sut, 'email', validationError);
+    Helpers.populateField('email');
+    Helpers.testStatusForField('email', validationError);
   });
 
   test('Should show password error if Validation fails', () => {
     const validationError = faker.random.words();
-    const { sut } = makeSut({ validationError });
+    makeSut({ validationError });
 
-    Helpers.populateField(sut, 'password');
-    Helpers.testStatusForField(sut, 'password', validationError);
+    Helpers.populateField('password');
+    Helpers.testStatusForField('password', validationError);
   });
 
   test('Should show passwordConfirmation error if Validation fails', () => {
     const validationError = faker.random.words();
-    const { sut } = makeSut({ validationError });
+    makeSut({ validationError });
 
-    Helpers.populateField(sut, 'passwordConfirmation');
-    Helpers.testStatusForField(sut, 'passwordConfirmation', validationError);
+    Helpers.populateField('passwordConfirmation');
+    Helpers.testStatusForField('passwordConfirmation', validationError);
   });
 
   test('Should show valid name if Validation succeeds', () => {
-    const { sut } = makeSut();
-    Helpers.populateField(sut, 'name');
-    Helpers.testStatusForField(sut, 'name');
+    makeSut();
+    Helpers.populateField('name');
+    Helpers.testStatusForField('name');
   });
 
   test('Should show valid email if Validation succeeds', () => {
-    const { sut } = makeSut();
-    Helpers.populateField(sut, 'email');
-    Helpers.testStatusForField(sut, 'email');
+    makeSut();
+    Helpers.populateField('email');
+    Helpers.testStatusForField('email');
   });
 
   test('Should show valid password if Validation succeeds', () => {
-    const { sut } = makeSut();
-    Helpers.populateField(sut, 'password');
-    Helpers.testStatusForField(sut, 'password');
+    makeSut();
+    Helpers.populateField('password');
+    Helpers.testStatusForField('password');
   });
 
   test('Should show valid passwordConfirmation if Validation succeeds', () => {
-    const { sut } = makeSut();
-    Helpers.populateField(sut, 'passwordConfirmation');
-    Helpers.testStatusForField(sut, 'passwordConfirmation');
+    makeSut();
+    Helpers.populateField('passwordConfirmation');
+    Helpers.testStatusForField('passwordConfirmation');
   });
 
   test('Should enable submit button if form is valid', () => {
-    const { sut } = makeSut();
+    makeSut();
 
-    Helpers.populateField(sut, 'name');
-    Helpers.populateField(sut, 'email');
-    Helpers.populateField(sut, 'password');
-    Helpers.populateField(sut, 'passwordConfirmation');
+    Helpers.populateField('name');
+    Helpers.populateField('email');
+    Helpers.populateField('password');
+    Helpers.populateField('passwordConfirmation');
 
-    const submitButton = sut.getByText('Cadastrar') as HTMLButtonElement;
+    const submitButton = screen.getByText('Cadastrar') as HTMLButtonElement;
     expect(submitButton.disabled).toBeFalsy();
   });
 
   test('Should show spinner on submit', () => {
-    const { sut } = makeSut();
-    simulateValidSubmit(sut);
+    makeSut();
+    simulateValidSubmit();
 
-    const spinner = sut.getByTestId('spinner');
+    const spinner = screen.getByTestId('spinner');
     expect(spinner).toBeTruthy();
   });
 
   test('Should add account with correct values', () => {
-    const { sut, addAccountSpy } = makeSut();
+    const { addAccountSpy } = makeSut();
     const name = faker.name.findName();
     const email = faker.internet.email();
     const password = faker.internet.password();
 
-    simulateValidSubmit(sut, { name, email, password });
+    simulateValidSubmit({ name, email, password });
 
     expect(addAccountSpy.params).toEqual({
       name,
@@ -182,42 +177,42 @@ describe('SignUp Page', () => {
   });
 
   test('Should add account only once', () => {
-    const { sut, addAccountSpy } = makeSut();
-    simulateValidSubmit(sut);
-    simulateValidSubmit(sut);
+    const { addAccountSpy } = makeSut();
+    simulateValidSubmit();
+    simulateValidSubmit();
 
     expect(addAccountSpy.callsCount).toBe(1);
   });
 
   test('Should not add account if form is invalid', () => {
-    const { sut, addAccountSpy } = makeSut({
+    const { addAccountSpy } = makeSut({
       validationError: faker.random.words(),
     });
 
-    Helpers.populateField(sut, 'email');
-    fireEvent.submit(sut.getByTestId('form'));
+    Helpers.populateField('email');
+    fireEvent.submit(screen.getByTestId('form'));
 
     expect(addAccountSpy.callsCount).toBe(0);
   });
 
   test('Should present error if add account fails', async () => {
-    const { sut, addAccountSpy } = makeSut();
+    const { addAccountSpy } = makeSut();
     const error = new EmailInUseError();
 
     await act(async () => {
       jest.spyOn(addAccountSpy, 'add').mockRejectedValueOnce(error);
-      await waitFor(() => simulateValidSubmit(sut));
+      await waitFor(() => simulateValidSubmit());
     });
 
-    Helpers.testChildCount(sut, 'formStatus', 1);
-    Helpers.testElementText(sut, 'mainError', error.message);
+    Helpers.testChildCount('formStatus', 1);
+    Helpers.testElementText('mainError', error.message);
   });
 
   test('Should call UpdateCurrentAccount on success', async () => {
-    const { sut, addAccountSpy, setCurrentAccountMock } = makeSut();
+    const { addAccountSpy, setCurrentAccountMock } = makeSut();
 
-    simulateValidSubmit(sut);
-    await waitFor(() => sut.getByTestId('form'));
+    simulateValidSubmit();
+    await waitFor(() => screen.getByTestId('form'));
 
     expect(setCurrentAccountMock).toHaveBeenCalledWith(addAccountSpy.account);
 
@@ -225,9 +220,9 @@ describe('SignUp Page', () => {
   });
 
   test('Should go to login page', () => {
-    const { sut } = makeSut();
+    makeSut();
 
-    const register = sut.getByText('Voltar para o login');
+    const register = screen.getByText('Voltar para o login');
     fireEvent.click(register);
 
     expect(history.location.pathname).toBe('/login');
