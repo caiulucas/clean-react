@@ -3,8 +3,8 @@ import { createContext, ReactNode, useContext } from 'react';
 import { AccountModel } from '@domain/models';
 
 export type StateProps = {
-  getCurrentAccount(): AccountModel;
-  setCurrentAccount(account: AccountModel): void;
+  getCurrentAccount?(): AccountModel;
+  setCurrentAccount?(account: AccountModel): void;
 };
 
 type Props = {
