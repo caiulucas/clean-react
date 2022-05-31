@@ -2,8 +2,6 @@ import { createMemoryHistory, MemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
 import { mockAccountModel } from '@domain/tests';
-import { getCurrentAccountAdapter } from '@main/adapters/current-account-adapter';
-import { MakeLogin } from '@main/factories/pages/login/login-factory';
 import { ApiProvider } from '@presentation/hooks/useApi';
 import { render } from '@testing-library/react';
 
@@ -20,7 +18,7 @@ function makeSut(account = mockAccountModel()): SutTypes {
     <ApiProvider value={{ getCurrentAccount: () => account }}>
       <Router location={history.location} navigator={history}>
         <PrivateRoute>
-          <MakeLogin />
+          <div />
         </PrivateRoute>
       </Router>
     </ApiProvider>,
