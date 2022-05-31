@@ -8,3 +8,4 @@ export { Logo } from './Logo';
 export { Icon } from './Icon';
 export { Spinner } from './Spinner';
 export { Form } from './Form';
+export { PrivateRoute } from './PrivateRoute';
