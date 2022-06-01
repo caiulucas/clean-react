@@ -13,10 +13,13 @@ export function SurveyItem({ survey }: Props) {
   return (
     <li className={styles.surveyItemWrap}>
       <div className={styles.surveyContent}>
-        <Icon iconName="thumbUp" className={styles.iconWrap} />
+        <Icon
+          iconName={survey.didAnswer ? 'thumbUp' : 'thumbDown'}
+          className={styles.iconWrap}
+        />
         <time>
           <span role="day" className={styles.day}>
-            {survey.date.getDate()}
+            {survey.date.getDate().toString().padStart(2, '0')}
           </span>
           <span role="month" className={styles.month}>
             {survey.date
