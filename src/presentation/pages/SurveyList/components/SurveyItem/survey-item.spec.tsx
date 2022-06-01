@@ -1,3 +1,4 @@
+import { SurveyModel } from '@domain/models';
 import { mockSurveyModel } from '@domain/tests';
 import faker from '@faker-js/faker';
 import { icons } from '@presentation/components/Icon';
@@ -5,15 +6,15 @@ import { render, screen } from '@testing-library/react';
 
 import { SurveyItem } from '.';
 
+function makeSut(survey = mockSurveyModel()): void {
+  render(<SurveyItem survey={survey} />);
+}
+
 describe('SurveyItem Component', () => {
   test('Should render with correct values', () => {
-    const survey = mockSurveyModel();
     const date = faker.date.recent();
-
-    survey.didAnswer = true;
-    survey.date = date;
-
-    render(<SurveyItem survey={survey} />);
+    const survey: SurveyModel = { ...mockSurveyModel(), didAnswer: true, date };
+    makeSut(survey);
 
     expect(screen.getByRole('icon')).toHaveProperty('src', icons.thumbUp.src);
     expect(screen.getByRole('question')).toHaveTextContent(survey.question);
