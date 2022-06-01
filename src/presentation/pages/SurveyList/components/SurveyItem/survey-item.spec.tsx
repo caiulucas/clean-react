@@ -29,4 +29,27 @@ describe('SurveyItem Component', () => {
       date.getFullYear().toString(),
     );
   });
+
+  test('Should render with correct values', () => {
+    const date = faker.date.soon();
+    const survey: SurveyModel = {
+      ...mockSurveyModel(),
+      didAnswer: false,
+      date,
+    };
+    makeSut(survey);
+
+    expect(screen.getByRole('icon')).toHaveProperty('src', icons.thumbDown.src);
+    expect(screen.getByRole('question')).toHaveTextContent(survey.question);
+
+    expect(screen.getByRole('day')).toHaveTextContent(
+      date.getDate().toString().padStart(2, '0'),
+    );
+    expect(screen.getByRole('month')).toHaveTextContent(
+      date.toLocaleString('pt-BR', { month: 'short' }).replace('.', ''),
+    );
+    expect(screen.getByRole('year')).toHaveTextContent(
+      date.getFullYear().toString(),
+    );
+  });
 });
