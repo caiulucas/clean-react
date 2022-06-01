@@ -2,7 +2,8 @@ import React from 'react';
 
 import { Footer, Header } from '@presentation/components';
 
-import { SurveyItem } from './components/SurveyItem';
+import { SurveyItemEmpty } from './components';
+// import { SurveyItem } from './components/SurveyItem';
 import styles from './styles.scss';
 
 export function SurveyList() {
@@ -11,8 +12,8 @@ export function SurveyList() {
       <Header />
       <main>
         <h2>Enquetes</h2>
-        <ul>
-          <SurveyItem />
+        <ul role="survey-list">
+          <SurveyItemEmpty />
         </ul>
       </main>
 
