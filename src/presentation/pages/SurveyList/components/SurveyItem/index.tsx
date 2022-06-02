@@ -11,7 +11,7 @@ type Props = {
 
 export function SurveyItem({ survey }: Props) {
   return (
-    <li className={styles.surveyItemWrap}>
+    <li className={styles.surveyItemWrap} role="survey-item">
       <div className={styles.surveyContent}>
         <Icon
           iconName={survey.didAnswer ? 'thumbUp' : 'thumbDown'}

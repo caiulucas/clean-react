@@ -5,10 +5,13 @@ import styles from './styles.scss';
 export function SurveyItemEmpty() {
   return (
     <>
-      <li className={styles.surveyItemEmptyWrap} />
-      <li className={styles.surveyItemEmptyWrap} />
-      <li className={styles.surveyItemEmptyWrap} />
-      <li className={styles.surveyItemEmptyWrap} />
+      {[0, 1, 2, 3].map(number => (
+        <li
+          key={number}
+          role="survey-list-empty"
+          className={styles.surveyItemEmptyWrap}
+        />
+      ))}
     </>
   );
 }
