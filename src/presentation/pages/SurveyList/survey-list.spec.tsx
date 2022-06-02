@@ -1,14 +1,16 @@
 import { SurveyModel } from '@domain/models';
-import { render, screen } from '@testing-library/react';
+import { mockSurveyListModel } from '@domain/tests';
+import { act, render, screen, waitFor } from '@testing-library/react';
 
 import { SurveyList } from '.';
 
 class LoadSurveyListSpy {
   callsCount = 0;
+  surveys = mockSurveyListModel();
 
   async loadAll(): Promise<SurveyModel[]> {
     this.callsCount++;
-    return [];
+    return this.surveys;
   }
 }
 
@@ -25,15 +27,21 @@ function makeSut(): SutTypes {
 }
 
 describe('SurveyList page', () => {
-  test('Should present four empty items on start', () => {
+  test('Should present four empty items on start', async () => {
     makeSut();
-    const surveyList = screen.getByRole('survey-list');
 
-    expect(surveyList.querySelectorAll('li:empty').length).toBe(4);
+    expect(await screen.findAllByRole('survey-list-empty')).toHaveLength(4);
   });
 
-  test('Should call LoadSurveyList', () => {
+  test('Should call LoadSurveyList', async () => {
     const { loadSurveyListSpy } = makeSut();
     expect(loadSurveyListSpy.callsCount).toBe(1);
+    await screen.findByRole('heading');
+  });
+
+  test('Should render SurveyItems on success', async () => {
+    makeSut();
+
+    expect(await screen.findAllByRole('survey-item')).toHaveLength(3);
   });
 });
