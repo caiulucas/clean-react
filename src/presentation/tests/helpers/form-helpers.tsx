@@ -17,10 +17,6 @@ export function testStatusForField(
   expect(label).toHaveProperty('title', validationError || '');
 }
 
-export function testChildCount(elementId: string, count: number) {
-  expect(screen.getByTestId(elementId).children).toHaveLength(count);
-}
-
 export function populateField(elementId: string, value = faker.random.word()) {
   const input = screen.getByTestId(elementId);
   fireEvent.input(input, {
