@@ -24,20 +24,20 @@ export function mockPostRequest(): HttpPostParams {
   };
 }
 
-export class HttpGetClientSpy<R> implements HttpGetClient<R> {
+export class HttpGetClientSpy<R = any> implements HttpGetClient<R> {
   url: string;
-  body?: any;
+  headers?: any;
   response: HttpResponse<R> = { statusCode: HttpStatusCode.ok };
 
-  async get({ url, body }: HttpGetParams): Promise<HttpResponse<R>> {
+  async get({ url, headers }: HttpGetParams): Promise<HttpResponse<R>> {
     this.url = url;
-    this.body = body;
+    this.headers = headers;
 
     return this.response;
   }
 }
 
-export class HttpPostClientSpy<R> implements HttpPostClient<R> {
+export class HttpPostClientSpy<R = any> implements HttpPostClient<R> {
   url?: string;
   body?: any;
   response: HttpResponse<R> = { statusCode: HttpStatusCode.ok };
