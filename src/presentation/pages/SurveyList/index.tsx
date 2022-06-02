@@ -5,6 +5,7 @@ import { LoadSurveyList } from '@domain/usecases/load-survey-list';
 import { Footer, Header } from '@presentation/components';
 
 import { List } from './components';
+import { Error } from './components/Error';
 import styles from './styles.scss';
 
 type Props = {
@@ -33,14 +34,7 @@ export function SurveyList({ loadSurveyList }: Props) {
       <Header />
       <main>
         <h2>Enquetes</h2>
-        {error ? (
-          <div>
-            <span role="error">{error}</span>
-            <button>Recarregar</button>
-          </div>
-        ) : (
-          <List surveys={surveys} />
-        )}
+        {error ? <Error error={error} /> : <List surveys={surveys} />}
       </main>
 
       <Footer />
