@@ -2,15 +2,15 @@ import React from 'react';
 
 import styles from './styles.scss';
 
-type Props = {
+type Props = React.DOMAttributes<HTMLButtonElement> & {
   error: string;
 };
 
-export function Error({ error }: Props) {
+export function Error({ error, ...rest }: Props) {
   return (
     <div className={styles.errorWrap}>
       <span role="error">{error}</span>
-      <button>Recarregar</button>
+      <button {...rest}>Recarregar</button>
     </div>
   );
 }

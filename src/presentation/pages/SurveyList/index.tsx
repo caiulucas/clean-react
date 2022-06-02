@@ -15,6 +15,7 @@ type Props = {
 export function SurveyList({ loadSurveyList }: Props) {
   const [surveys, setSurveys] = useState<SurveyModel[]>();
   const [error, setError] = useState('');
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -23,18 +24,30 @@ export function SurveyList({ loadSurveyList }: Props) {
         setSurveys(surveys);
       } catch (err) {
         setError(err.message);
+      } finally {
+        setReload(false);
       }
     }
 
     load();
-  }, [loadSurveyList]);
+  }, [loadSurveyList, reload]);
+
+  function onReload(): void {
+    setSurveys([]);
+    setError('');
+    setReload(true);
+  }
 
   return (
     <div className={styles.surveyListWrap}>
       <Header />
       <main>
         <h2>Enquetes</h2>
-        {error ? <Error error={error} /> : <List surveys={surveys} />}
+        {error ? (
+          <Error error={error} onClick={onReload} />
+        ) : (
+          <List surveys={surveys} />
+        )}
       </main>
 
       <Footer />
