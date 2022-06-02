@@ -9,9 +9,9 @@ type Props = {
   survey: SurveyModel;
 };
 
-export function SurveyItem({ survey }: Props) {
+export function Item({ survey }: Props) {
   return (
-    <li className={styles.surveyItemWrap} role="survey-item">
+    <li className={styles.itemWrap} role="survey-item">
       <div className={styles.surveyContent}>
         <Icon
           iconName={survey.didAnswer ? 'thumbUp' : 'thumbDown'}

@@ -29,7 +29,7 @@ describe('SurveyList page', () => {
   test('Should present four empty items on start', async () => {
     makeSut();
 
-    expect(await screen.findAllByRole('survey-list-empty')).toHaveLength(4);
+    expect(await screen.findAllByRole('survey-item-empty')).toHaveLength(4);
     expect(screen.queryByRole('error')).not.toBeInTheDocument();
   });
 

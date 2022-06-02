@@ -4,13 +4,13 @@ import faker from '@faker-js/faker';
 import { icons } from '@presentation/components/Icon';
 import { render, screen } from '@testing-library/react';
 
-import { SurveyItem } from '.';
+import { Item } from '.';
 
 function makeSut(survey = mockSurveyModel()): void {
-  render(<SurveyItem survey={survey} />);
+  render(<Item survey={survey} />);
 }
 
-describe('SurveyItem Component', () => {
+describe('Item Component', () => {
   test('Should render with correct values', () => {
     const date = faker.date.recent();
     const survey: SurveyModel = { ...mockSurveyModel(), didAnswer: true, date };

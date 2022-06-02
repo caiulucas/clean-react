@@ -1,2 +1,2 @@
-export { SurveyItem } from './SurveyItem';
-export { SurveyItemEmpty } from './SurveyItemEmpty';
+export { Item } from './Item';
+export { ItemEmpty } from './ItemEmpty';
