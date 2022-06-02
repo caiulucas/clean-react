@@ -27,16 +27,5 @@
 
       margin-bottom: 1.5rem;
     }
-
-    ul {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      width: 100%;
-
-      @media only screen and (max-width: 600px) {
-        flex-direction: column;
-      }
-    }
   }
 }

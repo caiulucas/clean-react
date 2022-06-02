@@ -4,8 +4,7 @@ import { SurveyModel } from '@domain/models';
 import { LoadSurveyList } from '@domain/usecases/load-survey-list';
 import { Footer, Header } from '@presentation/components';
 
-import { ItemEmpty } from './components';
-import { Item } from './components/Item';
+import { List } from './components';
 import styles from './styles.scss';
 
 type Props = {
@@ -40,13 +39,7 @@ export function SurveyList({ loadSurveyList }: Props) {
             <button>Recarregar</button>
           </div>
         ) : (
-          <ul role="survey-list">
-            {surveys ? (
-              surveys.map(survey => <Item key={survey.id} survey={survey} />)
-            ) : (
-              <ItemEmpty />
-            )}
-          </ul>
+          <List surveys={surveys} />
         )}
       </main>
 
