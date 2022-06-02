@@ -11,6 +11,9 @@ import faker from '@faker-js/faker';
 export function mockGetRequest(): HttpGetParams {
   return {
     url: faker.internet.url(),
+    headers: {
+      [faker.database.column()]: faker.random.words(),
+    },
   };
 }
 
