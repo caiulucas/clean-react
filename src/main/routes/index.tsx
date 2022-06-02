@@ -1,14 +1,12 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import {
   getCurrentAccountAdapter,
   setCurrentAccountAdapter,
 } from '@main/adapters/current-account-adapter';
-import { MakeLogin } from '@main/factories/pages/login/login-factory';
-import { MakeSignUp } from '@main/factories/pages/signup/signup-factory';
+import { MakeLogin, MakeSignUp, MakeSurveyList } from '@main/factories/pages';
 import { PrivateRoute } from '@presentation/components';
 import { ApiProvider } from '@presentation/hooks/useApi';
-import { SurveyList } from '@presentation/pages/SurveyList';
 
 export function Router() {
   return (
@@ -26,7 +24,7 @@ export function Router() {
             path="/"
             element={
               <PrivateRoute>
-                <SurveyList />
+                <MakeSurveyList />
               </PrivateRoute>
             }
           />
