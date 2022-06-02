@@ -14,9 +14,19 @@ type Props = {
 
 export function SurveyList({ loadSurveyList }: Props) {
   const [surveys, setSurveys] = useState<SurveyModel[]>();
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    loadSurveyList.loadAll().then(surveys => setSurveys(surveys));
+    async function load() {
+      try {
+        const surveys = await loadSurveyList.loadAll();
+        setSurveys(surveys);
+      } catch (err) {
+        setError(err.message);
+      }
+    }
+
+    load();
   }, [loadSurveyList]);
 
   return (
@@ -24,15 +34,22 @@ export function SurveyList({ loadSurveyList }: Props) {
       <Header />
       <main>
         <h2>Enquetes</h2>
-        <ul role="survey-list">
-          {surveys ? (
-            surveys.map(survey => (
-              <SurveyItem key={survey.id} survey={survey} />
-            ))
-          ) : (
-            <SurveyItemEmpty />
-          )}
-        </ul>
+        {error ? (
+          <div>
+            <span role="error">{error}</span>
+            <button>Recarregar</button>
+          </div>
+        ) : (
+          <ul role="survey-list">
+            {surveys ? (
+              surveys.map(survey => (
+                <SurveyItem key={survey.id} survey={survey} />
+              ))
+            ) : (
+              <SurveyItemEmpty />
+            )}
+          </ul>
+        )}
       </main>
 
       <Footer />
