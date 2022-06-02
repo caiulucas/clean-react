@@ -1,7 +1,7 @@
 import { UnexpectedError } from '@domain/errors';
 import { SurveyModel } from '@domain/models';
 import { mockSurveyListModel } from '@domain/tests';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import { SurveyList } from '.';
 
@@ -55,5 +55,18 @@ describe('SurveyList page', () => {
 
     expect(await screen.findByRole('error')).toHaveTextContent(error.message);
     expect(screen.queryByRole('survey-list')).not.toBeInTheDocument();
+  });
+
+  test('Should render LoadSurveyList on reload', async () => {
+    const loadSurveyListSpy = new LoadSurveyListSpy();
+
+    jest
+      .spyOn(loadSurveyListSpy, 'loadAll')
+      .mockRejectedValueOnce(new UnexpectedError());
+
+    makeSut(loadSurveyListSpy);
+
+    fireEvent.click(await screen.findByRole('button'));
+    expect(loadSurveyListSpy.callsCount).toBe(1);
   });
 });
