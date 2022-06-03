@@ -1,5 +1,3 @@
-import { act } from 'react-dom/test-utils';
-
 import { UnexpectedError } from '@domain/errors';
 import { mockSurveyListModel } from '@domain/tests';
 import { LoadSurveyList } from '@domain/usecases/load-survey-list';
@@ -70,5 +68,7 @@ describe('SurveyList page', () => {
 
     fireEvent.click(await screen.findByRole('button'));
     expect(loadSurveyListSpy.callsCount).toBe(1);
+
+    await screen.findByRole('heading');
   });
 });
