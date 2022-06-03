@@ -1,23 +1,35 @@
-import { createMemoryHistory } from 'history';
+import { createMemoryHistory, MemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
+import { AccountModel } from '@domain/models';
 import { ApiProvider } from '@presentation/hooks/useApi';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import { Header } from '.';
 
+type SutTypes = {
+  history: MemoryHistory;
+  setCurrentAccountMock(account: AccountModel): void;
+};
+
+function makeSut(): SutTypes {
+  const setCurrentAccountMock = jest.fn();
+  const history = createMemoryHistory({ initialEntries: ['/'] });
+
+  render(
+    <ApiProvider value={{ setCurrentAccount: setCurrentAccountMock }}>
+      <Router location={history.location} navigator={history}>
+        <Header />
+      </Router>
+    </ApiProvider>,
+  );
+
+  return { history, setCurrentAccountMock };
+}
+
 describe('Header Component', () => {
   test('Should call setCurrentAccount with null', async () => {
-    const setCurrentAccountMock = jest.fn();
-    const history = createMemoryHistory({ initialEntries: ['/'] });
-
-    render(
-      <ApiProvider value={{ setCurrentAccount: setCurrentAccountMock }}>
-        <Router location={history.location} navigator={history}>
-          <Header />
-        </Router>
-      </ApiProvider>,
-    );
+    const { history, setCurrentAccountMock } = makeSut();
 
     fireEvent.click(await screen.findByRole('logout'));
     expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined);
