@@ -9,7 +9,7 @@ import styles from './styles.scss';
 function HeaderBase() {
   const navigate = useNavigate();
 
-  const { setCurrentAccount } = useApi();
+  const { setCurrentAccount, getCurrentAccount } = useApi();
 
   function logout(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
@@ -24,7 +24,7 @@ function HeaderBase() {
         <Logo />
 
         <div>
-          <span>Caio</span>
+          <span role="username">{getCurrentAccount().name}</span>
           <a role="logout" href="#" onClick={logout}>
             Sair
           </a>
