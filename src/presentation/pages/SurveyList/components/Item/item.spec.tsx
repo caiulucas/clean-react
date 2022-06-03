@@ -1,5 +1,5 @@
-import { SurveyModel } from '@domain/models';
 import { mockSurveyModel } from '@domain/tests';
+import { LoadSurveyList } from '@domain/usecases/load-survey-list';
 import faker from '@faker-js/faker';
 import { icons } from '@presentation/components/Icon';
 import { render, screen } from '@testing-library/react';
@@ -13,7 +13,11 @@ function makeSut(survey = mockSurveyModel()): void {
 describe('Item Component', () => {
   test('Should render with correct values', () => {
     const date = faker.date.recent();
-    const survey: SurveyModel = { ...mockSurveyModel(), didAnswer: true, date };
+    const survey: LoadSurveyList.Model = {
+      ...mockSurveyModel(),
+      didAnswer: true,
+      date,
+    };
     makeSut(survey);
 
     expect(screen.getByRole('icon')).toHaveProperty('src', icons.thumbUp.src);
@@ -32,7 +36,7 @@ describe('Item Component', () => {
 
   test('Should render with correct values', () => {
     const date = faker.date.soon();
-    const survey: SurveyModel = {
+    const survey: LoadSurveyList.Model = {
       ...mockSurveyModel(),
       didAnswer: false,
       date,

@@ -3,10 +3,11 @@ import { Router } from 'react-router-dom';
 
 import { InvalidCredentialsError } from '@domain/errors';
 import { AccountModel } from '@domain/models';
+import { AuthenticationSpy } from '@domain/tests';
 import faker from '@faker-js/faker';
 import { ApiProvider } from '@presentation/hooks/useApi';
 import { Login } from '@presentation/pages';
-import { AuthenticationSpy, ValidationSpy } from '@presentation/tests';
+import { ValidationSpy } from '@presentation/tests';
 import { Helpers } from '@presentation/tests/helpers';
 import {
   act,

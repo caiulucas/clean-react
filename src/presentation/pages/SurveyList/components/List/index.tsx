@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { SurveyModel } from '@domain/models';
+import { LoadSurveyList } from '@domain/usecases/load-survey-list';
 
 import { Item } from '../Item';
 import { ItemEmpty } from '../ItemEmpty';
 import styles from './styles.scss';
 
 type Props = {
-  surveys: SurveyModel[];
+  surveys: LoadSurveyList.Model[];
 };
 
 export function List({ surveys }: Props) {

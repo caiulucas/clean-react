@@ -3,9 +3,10 @@ import { Router } from 'react-router-dom';
 
 import { EmailInUseError } from '@domain/errors';
 import { AccountModel } from '@domain/models';
+import { AddAccountSpy } from '@domain/tests';
 import faker from '@faker-js/faker';
 import { ApiProvider } from '@presentation/hooks/useApi';
-import { AddAccountSpy, ValidationSpy } from '@presentation/tests';
+import { ValidationSpy } from '@presentation/tests';
 import { Helpers } from '@presentation/tests/helpers';
 import {
   act,
