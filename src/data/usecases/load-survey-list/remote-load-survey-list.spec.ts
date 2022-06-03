@@ -1,7 +1,7 @@
 import { HttpStatusCode } from '@data/protocols/http';
 import { HttpGetClientSpy } from '@data/tests';
 import { UnexpectedError } from '@domain/errors';
-import { mockSurveyListModel } from '@domain/tests';
+import { mockRemoteSurveyListModel } from '@domain/tests';
 import faker from '@faker-js/faker';
 
 import { RemoteLoadSurveyList } from './remote-load-survey-list';
@@ -62,7 +62,7 @@ describe('RemoteLoadSurveyList', () => {
 
   test('Should return a list of SurveyModels if HttpPostClient returns 200', async () => {
     const { sut, httpGetClientSpy } = makeSut();
-    const httpResult = mockSurveyListModel();
+    const httpResult = mockRemoteSurveyListModel();
 
     httpGetClientSpy.response = {
       statusCode: HttpStatusCode.ok,
@@ -71,7 +71,20 @@ describe('RemoteLoadSurveyList', () => {
 
     const surveyList = await sut.loadAll();
 
-    expect(surveyList).toEqual(httpResult);
+    expect(surveyList).toEqual([
+      {
+        ...httpResult[0],
+        date: new Date(httpResult[0].date),
+      },
+      {
+        ...httpResult[1],
+        date: new Date(httpResult[1].date),
+      },
+      {
+        ...httpResult[2],
+        date: new Date(httpResult[2].date),
+      },
+    ]);
   });
 
   test('Should return an empty list if HttpPostClient returns 204', async () => {
