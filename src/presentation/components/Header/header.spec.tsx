@@ -37,7 +37,7 @@ describe('Header Component', () => {
   test('Should call setCurrentAccount with null', async () => {
     const { history, setCurrentAccountMock } = makeSut();
 
-    fireEvent.click(await screen.findByRole('logout'));
+    fireEvent.click(await screen.findByTestId('logout'));
     expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined);
     expect(history.location.pathname).toBe('/login');
   });
@@ -45,6 +45,8 @@ describe('Header Component', () => {
   test('Should render username correctly', async () => {
     const account = mockAccountModel();
     makeSut(account);
-    expect(await screen.findByRole('username')).toHaveTextContent(account.name);
+    expect(await screen.findByTestId('username')).toHaveTextContent(
+      account.name,
+    );
   });
 });

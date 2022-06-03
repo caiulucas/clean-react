@@ -24,8 +24,8 @@ function HeaderBase() {
         <Logo />
 
         <div>
-          <span role="username">{getCurrentAccount().name}</span>
-          <a role="logout" href="#" onClick={logout}>
+          <span data-testid="username">{getCurrentAccount().name}</span>
+          <a data-testid="logout" href="#" onClick={logout}>
             Sair
           </a>
         </div>
